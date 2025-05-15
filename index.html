@@ -2,359 +2,485 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Vibrant Blog - Dark Mode & Footer Update</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <style>
-        html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vibrant Blog - Dark Mode & Footer Update</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: white;
+      color: #222;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    body.nightmode {
+      background: #222;
+      color: #ffffff;
+    }
+
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+      background: #f5f5f5;
+      border-bottom: 1px solid #ddd;
+    }
+
+    body.nightmode .top-nav {
+      background: #222;
+      border-bottom: 1px solid #333;
+    }
+
+    .logo-title {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 0.5rem;
+    }
+
+    .site-title {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    #nightmode-toggle {
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.3rem 0.5rem;
+      border-radius: 5px;
+      color: #555;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    #nightmode-toggle:hover {
+      background-color: #ff3300;
+      color: white;
+    }
+
+    body.nightmode #nightmode-toggle {
+      color: #ff9933;
+    }
+
+    body.nightmode #nightmode-toggle:hover {
+      background-color: #cc6600;
+      color: white;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: center;
+      background: #f5f5f5;
+      border-top: 1px solid #ddd;
+    }
+
+    body.nightmode .bottom-nav {
+      background: #222;
+      border-top: 1px solid #333;
+    }
+
+    .nav-link {
+      color: #555;
+      padding: 0.8rem 1.2rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: #ff3300;
+    }
+
+    .login-link {
+      font-weight: 700;
+      color: #ff3300;
+    }
+
+    .login-link:hover {
+      color: #cc0000;
+    }
+
+    #posts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      padding: 1rem;
+      min-height: 200px;
+    }
+
+    .post {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .post:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    body.nightmode .post {
+      background: #1e1e1e;
+      color: #ddd;
+      box-shadow: none;
+    }
+
+    .post h2 {
+      margin-top: 0;
+      color: #ff3300;
+    }
+
+    .post small {
+      color: #888;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    body.nightmode .post small {
+      color: #bbb;
+    }
+
+    .post p,
+    .post .post-content {
+      line-height: 1.6;
+      color: #333;
+    }
+
+    body.nightmode .post p,
+    body.nightmode .post .post-content {
+      color: #ccc;
+    }
+
+    .post-video iframe {
+      width: 100%;
+      height: 200px;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border: none;
+    }
+
+    .top-trending-box {
+      padding: 1rem;
+      margin: 1rem;
+      border-radius: 10px;
+    }
+
+    body.nightmode .top-trending-box {
+      background: #111;
+    }
+
+    .top-trending-box h4 {
+      margin-top: 0;
+      margin-bottom: 0.8rem;
+      color: #ff3300;
+    }
+
+    .top-trending-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .top-trending-box li {
+      margin-bottom: 0.6rem;
+    }
+
+      .top-trending-box {
+      background-color: #222;
+      border-left: 5px solid #ff3300;
+      padding: 1rem;
+      margin-top: 2rem;
+      animation: fadeInUp 1s ease forwards;
+    }
+    .top-trending-box a:hover {
+      color: #ff3300;
+    }
+
+    footer {
+      background: linear-gradient(45deg, #ff0000, #cc0000);
+      color: white;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      font-size: 0.9rem;
+    }
+
+    footer>div {
+      flex: 1 1 300px;
+      margin: 1rem 0;
+      max-width: 350px;
+    }
+
+    .footer-about p {
+      line-height: 1.5;
+    }
+
+    .footer-social a {
+      color: white;
+      margin-right: 1rem;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-social a:hover {
+      color: #ff6666;
+    }
+
+    .footer-subscribe form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .footer-subscribe input[type="email"] {
+      flex: 1;
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: none;
+      min-width: 180px;
+    }
+
+    .footer-subscribe button {
+      padding: 0.55rem 1rem;
+      box-shadow: 0 0 8px rgb(0, 0, 0);
+      border-radius: 10px;
+      border: none;
+      background: #ff0000;
+      color: rgb(255, 255, 255);
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .footer-subscribe button:hover {
+      background: #cc0000;
+    }
+
+    @media (max-width: 600px) {
+      .top-trending-box {
+        max-width: 100%;
+        margin: 1rem;
+      }
+
+      footer {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      footer > div {
+        max-width: 100%;
+      }
+    }.post-list {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .post-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .post-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+.post-card {
+  background: white;
+  color: #222;
+  border-radius: 12px;
+  box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  transition: background 0.3s ease, color 0.3s ease;
 }
-main {
-    flex: 1;
+
+.nightmode .post-card {
+  background: #333;
+  color: #fff;
 }
 
+.post-card h2 {
+  margin-top: 0;
+  color: #ff3300;
+}
 
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: white;
-            color: #222;
-            transition: background 0.3s ease, color 0.3s ease;
-        }
+.post-card small {
+  display: block;
+  margin-bottom: 1rem;
+  color: #666;
+}
 
-        body.nightmode {
-          background: #222;
-            color: #ffffff;
-        }
+.nightmode .post-card small {
+  color: #ccc;
+}
 
-        .top-nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.5rem 1rem;
-            background: #f5f5f5;
-            border-bottom: 1px solid #ddd;
-        }
+.post-card iframe {
+  width: 100%;
+  height: auto;
+  margin-top: 1rem;
+  border-radius: 8px;
+  border: none;
+}
 
-        body.nightmode .top-nav {
-            background: #222;
-            border-bottom: 1px solid #333;
-        }
-
-        .logo-title {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo {
-            width: 40px;
-            height: 40px;
-            margin-right: 0.5rem;
-        }
-
-        .site-title {
-            font-size: 1.4rem;
-            font-weight: bold;
-        }
-
-        #nightmode-toggle {
-            background: transparent;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.3rem 0.5rem;
-            border-radius: 5px;
-            color: #555;
-        }
-
-        #nightmode-toggle:hover {
-            background-color: #ff3300;
-            color: white;
-        }
-
-        body.nightmode #nightmode-toggle {
-            color: #ff9933;
-        }
-
-        body.nightmode #nightmode-toggle:hover {
-            background-color: #cc6600;
-            color: white;
-        }
-
-        .bottom-nav {
-            display: flex;
-            justify-content: center;
-            background: #f5f5f5;
-            border-top: 1px solid #ddd;
-        }
-
-        body.nightmode .bottom-nav {
-            background: #222;
-            border-top: 1px solid #333;
-        }
-
-        .nav-link {
-            color: #555;
-            padding: 0.8rem 1.2rem;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: #ff3300;
-        }
-
-        .login-link {
-            font-weight: 700;
-            color: #ff3300;
-        }
-
-        .login-link:hover {
-            color: #cc0000;
-        }
-
-        #posts {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            padding: 1rem;
-        }
-
-        .post {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .post:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        body.nightmode .post {
-            background: #1e1e1e;
-            color: #ddd;
-        }
-
-        .post h2 {
-            margin-top: 0;
-            color: #ff3300;
-        }
-
-        .post small {
-            color: #888;
-            display: block;
-            margin-bottom: 1rem;
-        }
-
-        body.nightmode .post small {
-            color: #bbb;
-        }
-
-        .post p {
-            line-height: 1.6;
-            color: #333;
-        }
-
-        body.nightmode .post p {
-            color: #ccc;
-        }
-
-        .top-trending-box {
-            background: #eee;
-            padding: 1rem;
-            margin: 1rem;
-            border-radius: 10px;
-        }
-
-        body.nightmode .top-trending-box {
-            background: #111;
-        }
-
-        footer {
-            background: linear-gradient(45deg, #ff0000, #cc0000);
-            color: white;
-            padding: 2rem 1rem;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-evenly;
-            font-size: 0.9rem;
-        }
-
-        footer>div {
-            flex: 1 1 300px;
-            margin: 1rem 0;
-            max-width: 350px;
-        }
-
-        .footer-about p {
-            line-height: 1.5;
-        }
-
-        .footer-social a {
-            color: white;
-            margin-right: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .footer-social a:hover {
-            color: #ff6666;
-        }
-
-        .footer-subscribe form {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .footer-subscribe input[type="email"] {
-            flex: 1;
-            padding: 0.5rem;
-            border-radius: 5px;
-            border: none;
-            min-width: 180px;
-        }
-
-        .footer-subscribe button {
-            padding: 0.55rem 1rem;
-            box-shadow: 0 0 8px rgb(0, 0, 0);
-            border-radius: 10px;
-            border: none;
-            background: #ff0000;
-            color: rgb(255, 255, 255);
-            cursor: pointer;
-        }
-
-        .footer-subscribe button:hover {
-            background: #ff0000;
-        }
-    </style>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  </style>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
-    <header>
-        <nav class="top-nav">
-            <div class="logo-title">
-                <img src="pngtree-colorful-blog-speech-bubble-vector-png-image_6633021.png" class="logo" />
-                <span class="site-title">ICHIGO OFFICIAL BLOGS</span>
-            </div>
-            <button id="nightmode-toggle">🌙</button>
-        </nav>
-        <nav class="bottom-nav">
-            <a href="#" class="nav-link"><i class="fas fa-home"></i> Home</a>
-            <a href="#" class="nav-link"><i class="fas fa-file-alt"></i> Posts</a>
-            <a href="#" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
-            <a href="login.html" class="nav-link login-link"><i class="fas fa-sign-in-alt"></i> Login</a>
-        </nav>
-    </header>
+  <header>
+    <nav class="top-nav">
+      <div class="logo-title">
+        <img src="pngtree-colorful-blog-speech-bubble-vector-png-image_6633021.png" alt="Logo" class="logo" />
+        <span class="site-title">ICHIGO OFFICIAL BLOGS</span>
+      </div>
+      <button id="nightmode-toggle" aria-label="Toggle night mode">🌙</button>
+    </nav>
+    <nav class="bottom-nav">
+      <a href="#" class="nav-link"><i class="fas fa-home"></i> Home</a>
+      <a href="#" class="nav-link"><i class="fas fa-file-alt"></i> Posts</a>
+      <a href="#" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+      <a href="login.html" class="nav-link login-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+    </nav>
+  </header>
+ <main id="public-posts" class="post-list"></main>
+  <footer>
+    <div class="footer-about">
+      <h4>About Vibrant Blog</h4>
+      <p>Your daily dose of tech, design, and development. Stay updated with trends and tutorials from experts!</p>
+    </div>
+    <div class="footer-subscribe">
+      <h4>Subscribe to our newsletter</h4>
+      <form id="subscribe-form" action="#" method="post" onsubmit="handleSubscribe(event)">
+        <input type="email" id="subscribe-email" placeholder="Enter your email" required />
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+    <div class="footer-social">
+      <h4>Follow us</h4>
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+  </footer>
 
-    <main>
-        <div id="posts">Loading posts...</div>
+  <script>
+   // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCdeme0EVSoDmtKS2kjJb9lz_om82VxTSo",
+      authDomain: "bloging-1e7df.firebaseapp.com",
+      projectId: "bloging-1e7df",
+      storageBucket: "bloging-1e7df.appspot.com",
+      messagingSenderId: "177297831056",
+      appId: "1:177297831056:web:4cc414cdeb9e4ebe14d415"
+    };
 
-        <div class="top-trending-box">
-            <h4>🔥 Top Trending</h4>
-            <ul>
-                <li><a href="#">How to Master CSS Grid</a></li>
-                <li><a href="#">Dark Mode in 5 Minutes</a></li>
-                <li><a href="#">JavaScript Animation Tricks</a></li>
-            </ul>
-        </div>
-    </main>
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-    <footer>
-        <div class="footer-about">
-            <h4>About Vibrant Blog</h4>
-            <p>Your daily dose of tech, design, and development. Stay updated with trends and tutorials from experts!
-            </p>
-        </div>
-        <div class="footer-subscribe">
-            <h4>Subscribe to our newsletter</h4>
-            <form action="#" method="post">
-                <input type="email" placeholder="Enter your email" required>
-                <button type="submit">Subscribe</button>
-            </form>
-        </div>
-        <div class="footer-social">
-            <h4>Follow us</h4>
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-        </div>
-    </footer>
+    const postsContainer = document.getElementById('posts');
+  // Extract video ID function
+  function getYouTubeVideoID(url) {
+    if (!url) return null;
+    const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+  }
 
-    <script>
-        const nightToggle = document.getElementById('nightmode-toggle');
-        function updateToggleIcon() {
-            if (document.body.classList.contains('nightmode')) {
-                nightToggle.textContent = '☀️';
-            } else {
-                nightToggle.textContent = '🌙';
-            }
-        }
-        nightToggle.addEventListener('click', () => {
-            document.body.classList.toggle('nightmode');
-            localStorage.setItem('nightmode', document.body.classList.contains('nightmode'));
-            updateToggleIcon();
-        });
-        if (localStorage.getItem('nightmode') === 'true') {
-            document.body.classList.add('nightmode');
-        }
-        updateToggleIcon();
-    </script>
+  // Load public posts
+  async function loadPublicPosts() {
+    const container = document.getElementById('public-posts');
+    try {
+      const snapshot = await db.collection('posts').orderBy('createdAt', 'desc').get();
+      if (snapshot.empty) {
+        container.innerHTML = '<p>No blog posts yet.</p>';
+        return;
+      }
 
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCdeme0EVSoDmtKS2kjJb9lz_om82VxTSo",
-            authDomain: "bloging-1e7df.firebaseapp.com",
-            projectId: "bloging-1e7df",
-            storageBucket: "bloging-1e7df.appspot.com",
-            messagingSenderId: "177297831056",
-            appId: "1:177297831056:web:4cc414cdeb9e4ebe14d415"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        const postsContainer = document.getElementById('posts');
-
-        async function loadPosts() {
-            try {
-                const snapshot = await db.collection('posts').orderBy('createdAt', 'desc').get();
-                if (snapshot.empty) {
-                    postsContainer.innerHTML = '<p>No posts found.</p>';
-                    return;
-                }
-
-                postsContainer.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const post = doc.data();
-                    const div = document.createElement('div');
-                    div.className = 'post';
-                    div.innerHTML = `
+      container.innerHTML = '';
+      snapshot.forEach(doc => {
+        const post = doc.data();
+        const videoID = getYouTubeVideoID(post.youtubeUrl);
+        const postHTML = `
+          <article class="post-card">
             <h2>${post.title}</h2>
             <small>By ${post.author} on ${post.date}</small>
-            <p>${post.content}</p>
-          `;
-                    postsContainer.appendChild(div);
-                });
-            } catch (err) {
-                postsContainer.innerHTML = `<p>Error loading posts: ${err.message}</p>`;
-            }
-        }
+            ${videoID ? `
+              <div class="post-video">
+                <iframe src="https://www.youtube.com/embed/${videoID}" allowfullscreen></iframe>
+              </div>
+            ` : ''}
+            <div class="post-body">${post.content}</div>
+          </article>
+        `;
+        container.innerHTML += postHTML;
+      });
+    } catch (err) {
+      container.innerHTML = `<p>Error loading posts: ${err.message}</p>`;
+    }
+  }
 
-        loadPosts();
-    </script>
+  loadPublicPosts();
 
+
+    // Night mode toggle
+    const nightToggle = document.getElementById('nightmode-toggle');
+
+    function updateToggleIcon() {
+      if (document.body.classList.contains('nightmode')) {
+        nightToggle.textContent = '☀️';
+      } else {
+        nightToggle.textContent = '🌙';
+      }
+    }
+
+    nightToggle.addEventListener('click', () => {
+      document.body.classList.toggle('nightmode');
+      localStorage.setItem('nightmode', document.body.classList.contains('nightmode'));
+      updateToggleIcon();
+    });
+
+    if (localStorage.getItem('nightmode') === 'true') {
+      document.body.classList.add('nightmode');
+    }
+    updateToggleIcon();
+
+  
+
+    
+
+  </script>
 </body>
 
 </html>

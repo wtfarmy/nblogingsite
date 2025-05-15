@@ -1,468 +1,324 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin - Manage Blog Posts</title>
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <title>Admin Panel - Manage Blog Posts</title>
 
-  <!-- Quill CSS & JS -->
+  <!-- Quill editor CSS -->
+
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
-  <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0; padding: 0;
-      background: #f7f8fa;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      background: #fafafa;
+      color: #222;
     }
+
     h1 {
-      background: #24292e;
-      color: white;
-      margin: 0;
-      padding: 20px;
       text-align: center;
-      font-weight: 600;
-      position: relative;
+      margin-bottom: 2rem;
+      color: #ff3300;
     }
-    #logout-btn {
-      position: absolute;
-      top: 20px; right: 20px;
-      background: #e74c3c;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: 600;
-      display: none;
-      z-index: 10;
-    }
-    #login-section, #admin-section {
-      max-width: 720px;
-      margin: 40px auto;
+
+    form {
       background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin-bottom: 3rem;
     }
+
     label {
       display: block;
-      margin-top: 15px;
+      margin-bottom: 0.3rem;
       font-weight: 600;
-      font-size: 14px;
     }
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    input[type="date"],
-    input[type="file"] {
+
+    input[type="text"], input[type="date"], input[type="url"] {
       width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 15px;
-      box-sizing: border-box;
-    }
-    button[type="submit"], #save-post {
-      margin-top: 20px;
-      background: #2ecc71;
-      border: none;
-      padding: 12px 18px;
-      color: white;
-      font-weight: 600;
-      font-size: 16px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      width: 100%;
-    }
-    button[type="submit"]:hover, #save-post:hover {
-      background: #27ae60;
-    }
-    #editor-container {
-      height: 220px;
-      margin-top: 10px;
-    }
-    .post-item {
-      background: #f0f0f0;
-      padding: 20px;
-      margin-bottom: 15px;
-      border: 1px solid #ddd;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
       border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    #editor {
+      height: 150px;
+      margin-bottom: 1rem;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button[type="submit"] {
+      background: #ff3300;
+      color: white;
+      font-weight: 700;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background: #cc0000;
+    }
+
+    .posts-list {
+      margin-top: 1rem;
+    }
+
+    .post {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
       position: relative;
-      word-wrap: break-word;
     }
-    .post-item h3 {
-      margin-top: 0;
-      margin-bottom: 5px;
+
+    .post h3 {
+      margin: 0 0 0.3rem 0;
+      color: #ff3300;
     }
-    .post-item small {
-      color: #555;
-      font-style: italic;
-      margin-bottom: 10px;
+
+    .post small {
+      color: #666;
       display: block;
+      margin-bottom: 0.5rem;
     }
-    .delete-btn {
+
+    .post-content {
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-video {
+      margin-top: 0.75rem;
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+    }
+
+    .post-video iframe {
       position: absolute;
-      top: 15px;
-      right: 15px;
-      background: #e74c3c;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .btn-delete {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #cc0000;
       border: none;
       color: white;
-      padding: 6px 10px;
-      border-radius: 5px;
+      padding: 0.4rem 0.7rem;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: 600;
-      font-size: 13px;
+      font-weight: 700;
+      transition: background 0.3s ease;
     }
-    img.post-image {
-      max-width: 100%;
-      margin-top: 10px;
-      border-radius: 5px;
-      display: block;
-      box-shadow: 0 0 6px rgba(0,0,0,0.1);
-      height: auto;
+
+    .btn-delete:hover {
+      background: #ff0000;
     }
-    #posts-list {
-      margin-top: 30px;
-    }
-    #login-error {
-      margin-top: 12px;
-      color: #e74c3c;
-      font-weight: 600;
+
+    .loading {
+      text-align: center;
+      font-style: italic;
+      color: #999;
     }
   </style>
+
+  <!-- Firebase SDK -->
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <!-- Quill Editor JS -->
+
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
 </head>
 <body>
 
-<h1>Admin Panel - Manage Blog Posts
-  <button id="logout-btn">Logout</button>
-</h1>
+  <h1>Admin Panel: Manage Blog Posts</h1>
 
-<div id="login-section">
-  <h2>Admin Login</h2>
-  <form id="login-form">
-    <label for="email">Email</label>
-    <input id="email" type="email" required />
-    <label for="password">Password</label>
-    <input id="password" type="password" required />
-    <button type="submit">Login</button>
-  </form>
-  <p id="login-error"></p>
-</div>
-
-<div id="admin-section" style="display:none;">
-  <h2>Create New Post</h2>
   <form id="post-form">
-    <label for="title">Title</label>
-    <input id="title" type="text" placeholder="Enter post title" required />
+    <label for="title">Post Title</label>
+    <input type="text" id="title" required placeholder="Enter post title" />
 
-    <label for="author">Author</label>
-    <input id="author" type="text" placeholder="Author name" required />
+```
+<label for="author">Author</label>
+<input type="text" id="author" required placeholder="Enter author name" />
 
-    <label for="image">Featured Image (optional)</label>
-    <input id="image" type="file" accept="image/*" />
+<label for="date">Date</label>
+<input type="date" id="date" required />
 
-    <label for="date">Date</label>
-    <input id="date" type="date" required />
-    
-    <label for="editor-container">Content</label>
-    <div id="editor-container"></div>
-    <button id="save-post" type="submit">Save Post</button>
+<label for="editor">Content</label>
+<div id="editor"></div>
+
+<label for="youtube-url">YouTube Video URL (optional)</label>
+<input type="url" id="youtube-url" placeholder="Paste YouTube video link here" />
+
+<button type="submit">Add Post</button>
+```
+
   </form>
 
   <h2>Existing Posts</h2>
-  <div id="posts-list">Loading posts...</div>
-</div>
+  <div id="posts-container" class="posts-list">
+    <p class="loading">Loading posts...</p>
+  </div>
 
-<script>
-  // Firebase config
-  const firebaseConfig = {
-    apiKey: "AIzaSyCdeme0EVSoDmtKS2kjJb9lz_om82VxTSo",
-    authDomain: "bloging-1e7df.firebaseapp.com",
-    projectId: "bloging-1e7df",
-    storageBucket: "bloging-1e7df.appspot.com",
-    messagingSenderId: "177297831056",
-    appId: "1:177297831056:web:4cc414cdeb9e4ebe14d415"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.firestore();
-  const storage = firebase.storage();
+  <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCdeme0EVSoDmtKS2kjJb9lz_om82VxTSo",
+      authDomain: "bloging-1e7df.firebaseapp.com",
+      projectId: "bloging-1e7df",
+      storageBucket: "bloging-1e7df.appspot.com",
+      messagingSenderId: "177297831056",
+      appId: "1:177297831056:web:4cc414cdeb9e4ebe14d415"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-  // Initialize Quill editor
-  const quill = new Quill('#editor-container', {
-    theme: 'snow',
-    modules: {
-      toolbar: [
-        ['bold', 'italic', 'underline', 'strike'],
-        ['blockquote', 'code-block'],
-        [{ 'header': 1 }, { 'header': 2 }],
-        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'script': 'sub'}, { 'script': 'super' }],
-        [{ 'indent': '-1'}, { 'indent': '+1' }],
-        [{ 'direction': 'rtl' }],
-        [{ 'size': ['small', false, 'large', 'huge'] }],
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-        [{ 'color': [] }, { 'background': [] }],
-        [{ 'font': [] }],
-        [{ 'align': [] }],
-        ['clean'],
-        ['link', 'image', 'video']
-      ]
-    }
-  });
+    // Initialize Quill editor
+    const quill = new Quill('#editor', {
+      theme: 'snow',
+      placeholder: 'Write your blog content here...',
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline'],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          ['link', 'image']
+        ]
+      }
+    });
 
-  // Elements
-  const loginSection = document.getElementById('login-section');
-  const adminSection = document.getElementById('admin-section');
-  const loginForm = document.getElementById('login-form');
-  const loginError = document.getElementById('login-error');
-  const logoutBtn = document.getElementById('logout-btn');
-  const postForm = document.getElementById('post-form');
-  const postsList = document.getElementById('posts-list');
-  const imageInput = document.getElementById('image');
-  const savePostBtn = document.getElementById('save-post');
+    const postForm = document.getElementById('post-form');
+    const postsContainer = document.getElementById('posts-container');
 
-  // Auth state change
-  auth.onAuthStateChanged(user => {
-    if (user && user.email === 'roqfatma786@gmail.com') {
-      loginSection.style.display = 'none';
-      adminSection.style.display = 'block';
-      logoutBtn.style.display = 'inline-block';
-      fetchPosts();
-    } else {
-      loginSection.style.display = 'block';
-      adminSection.style.display = 'none';
-      logoutBtn.style.display = 'none';
-      postsList.innerHTML = 'Please login to manage posts.';
-    }
-  });
-
-  // Disable Firebase auth login form submission
-  loginForm.removeEventListener('submit', () => {});
-
-  // Hardcoded admin credentials (change as needed)
-  const ADMIN_EMAIL = "admin@example.com";
-  const ADMIN_PASSWORD = "admin123";
-
-  // Remove Firebase auth listeners by overriding the login form submit
-  loginForm.addEventListener('submit', e => {
-    e.preventDefault();
-
-    const email = loginForm.email.value.trim();
-    const password = loginForm.password.value.trim();
-
-    loginError.textContent = '';
-
-    // Simple validation
-    if (email === '' || password === '') {
-      loginError.textContent = 'Please enter email and password.';
-      return;
+    // Extract YouTube video ID from URL helper
+    function getYouTubeVideoID(url) {
+      if (!url) return null;
+      // Common YouTube URL formats regex
+      const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
     }
 
-    // Check against hardcoded credentials
-    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      // Successful login
-
-      // Hide login section and show admin section
-      loginSection.style.display = 'none';
-      adminSection.style.display = 'block';
-      logoutBtn.style.display = 'inline-block';
-
-      // Reset form and error
-      loginForm.reset();
-      loginError.textContent = '';
-
-      // Optionally, fetch posts now that admin is logged in
-      fetchPosts();
-    } else {
-      loginError.textContent = 'Invalid email or password.';
-    }
-  });
-
-  // Logout button to clear session and revert UI
-  logoutBtn.addEventListener('click', () => {
-    // Show login, hide admin
-    loginSection.style.display = 'block';
-    adminSection.style.display = 'none';
-    logoutBtn.style.display = 'none';
-
-    // Clear any error messages and reset form
-    loginError.textContent = '';
-    loginForm.reset();
-  });
-
-  // Initially, make sure admin section is hidden and login visible
-  loginSection.style.display = 'block';
-  adminSection.style.display = 'none';
-  logoutBtn.style.display = 'none';
-
-  // Remove Firebase auth state listener to prevent interference
-  if (typeof auth !== 'undefined' && auth.onAuthStateChanged) {
-    auth.onAuthStateChanged(() => {});
-  }
-
-
-  // Save post
-  postForm.addEventListener('submit', async e => {
-    e.preventDefault();
-
-    const title = postForm.title.value.trim();
-    const author = postForm.author.value.trim();
-    const date = postForm.date.value;
-    const content = quill.root.innerHTML.trim();
-
-    if (!title || !author || !date || !content || content === '<p><br></p>') {
-      alert('Please fill all required fields and add some content.');
-      return;
-    }
-
-    savePostBtn.disabled = true;
-    savePostBtn.textContent = 'Saving...';
-
-    let imageUrl = null;
-
-    if (imageInput.files.length > 0) {
+    // Load posts and display them
+    async function loadPosts() {
+      postsContainer.innerHTML = '<p class="loading">Loading posts...</p>';
       try {
-        const file = imageInput.files[0];
-        const storageRef = storage.ref();
-        const imageRef = storageRef.child(`post-images/${Date.now()}_${file.name}`);
-        await imageRef.put(file);
-        imageUrl = await imageRef.getDownloadURL();
-      } catch (uploadErr) {
-        alert('Error uploading image: ' + uploadErr.message);
-        savePostBtn.disabled = false;
-        savePostBtn.textContent = 'Save Post';
-        return;
-      }
-    }
-
-    try {
-      await db.collection('posts').add({
-        title,
-        author,
-        date,
-        content,
-        imageUrl: imageUrl || null,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      alert('Post saved successfully!');
-      postForm.reset();
-      quill.setContents([]);
-      fetchPosts();
-    } catch (err) {
-      alert('Error saving post: ' + err.message);
-    } finally {
-      savePostBtn.disabled = false;
-      savePostBtn.textContent = 'Save Post';
-    }
-  });
-
-  // Fetch and display posts
-  async function fetchPosts() {
-    postsList.innerHTML = 'Loading posts...';
-    try {
-      const snapshot = await db.collection('posts').orderBy('createdAt', 'desc').get();
-      if (snapshot.empty) {
-        postsList.innerHTML = '<p>No posts found.</p>';
-        return;
-      }
-      postsList.innerHTML = '';
-      snapshot.forEach(doc => {
-        const post = doc.data();
-        const postId = doc.id;
-
-        const postDiv = document.createElement('div');
-        postDiv.classList.add('post-item');
-
-        let formattedDate = post.date;
-        if (post.date) {
-          try {
-            formattedDate = new Date(post.date).toLocaleDateString();
-          } catch {}
+        const snapshot = await db.collection('posts').orderBy('createdAt', 'desc').get();
+        if (snapshot.empty) {
+          postsContainer.innerHTML = '<p>No posts found.</p>';
+          return;
         }
 
-        postDiv.innerHTML = `
-          <h3>${escapeHtml(post.title)}</h3>
-          <small>By ${escapeHtml(post.author)} on ${formattedDate}</small>
-          <div>${post.content}</div>
-          ${post.imageUrl ? `<img class="post-image" src="${post.imageUrl}" alt="Post Image">` : ''}
-          <button class="delete-btn" data-id="${postId}">Delete</button>
-        `;
-        postsList.appendChild(postDiv);
-      });
+        postsContainer.innerHTML = '';
+        snapshot.forEach(doc => {
+          const post = doc.data();
+          const videoID = getYouTubeVideoID(post.youtubeUrl);
+          const postDiv = document.createElement('div');
+          postDiv.classList.add('post');
 
-      // Attach delete handlers
-      document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          if (confirm('Are you sure you want to delete this post?')) {
-            try {
-              await db.collection('posts').doc(btn.dataset.id).delete();
-              alert('Post deleted.');
-              fetchPosts();
-            } catch (err) {
-              alert('Error deleting post: ' + err.message);
-            }
-          }
+          postDiv.innerHTML = `
+  <h3>${post.title}</h3>
+  ${videoID ? `
+  <div class="post-video">
+    <iframe src="https://www.youtube.com/embed/${videoID}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+  </div>
+  ` : ''}
+  <small>By ${post.author} on ${post.date}</small>
+  <div class="post-content">${post.content}</div>
+  <button class="btn-delete" onclick="deletePost('${doc.id}')">Delete</button>
+`;
+
+          postsContainer.appendChild(postDiv);
         });
-      });
-    } catch (err) {
-      postsList.innerHTML = 'Error loading posts: ' + err.message;
-    }
-  }
-
-  // Simple HTML escape function for safety in displayed text
-  function escapeHtml(text) {
-    return text
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-</script>
-<script>
-let loginCooldown = false;
-
-loginForm.addEventListener('submit', e => {
-  e.preventDefault();
-
-  if (loginCooldown) {
-    loginError.textContent = "Please wait a few seconds before trying again.";
-    return;
-  }
-
-  const email = loginForm.email.value;
-  const password = loginForm.password.value;
-  loginError.textContent = '';
-  loginForm.querySelector('button[type="submit"]').disabled = true;
-
-  auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
-      loginForm.reset();
-    })
-    .catch(err => {
-      if (err.code === 'auth/too-many-requests') {
-        loginError.textContent = "Too many login attempts. Please try again later.";
-      } else {
-        loginError.textContent = err.message;
+      } catch (error) {
+        postsContainer.innerHTML = `<p>Error loading posts: ${error.message}</p>`;
       }
-    })
-    .finally(() => {
-      loginForm.querySelector('button[type="submit"]').disabled = false;
-      loginCooldown = true;
-      setTimeout(() => {
-        loginCooldown = false;
-      }, 5000); // 5 seconds cooldown before next attempt
+    }
+
+    // Delete post function
+    async function deletePost(id) {
+      if (!confirm('Are you sure you want to delete this post?')) return;
+      try {
+        await db.collection('posts').doc(id).delete();
+        alert('Post deleted!');
+        loadPosts();
+      } catch (error) {
+        alert('Failed to delete post: ' + error.message);
+      }
+    }
+
+    // Add new post on form submit
+    postForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById('title').value.trim();
+      const author = document.getElementById('author').value.trim();
+      const date = document.getElementById('date').value;
+      const content = quill.root.innerHTML.trim();
+      const youtubeUrl = document.getElementById('youtube-url').value.trim();
+
+      if (!title || !author || !date || !content || content === '<p><br></p>') {
+        alert('Please fill all fields and add some content.');
+        return;
+      }
+
+      // Optional: validate YouTube URL format, skip if empty
+      if (youtubeUrl && !getYouTubeVideoID(youtubeUrl)) {
+        alert('Please enter a valid YouTube video URL or leave it empty.');
+        return;
+      }
+
+      try {
+        await db.collection('posts').add({
+          title,
+          author,
+          date: new Date(date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }),
+          content,
+          youtubeUrl: youtubeUrl || null,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        alert('Post added successfully!');
+        postForm.reset();
+        quill.setContents([]);
+        loadPosts();
+      } catch (error) {
+        alert('Error adding post: ' + error.message);
+      }
     });
-});
-</script>
+
+    // Expose deletePost globally so onclick works
+    window.deletePost = deletePost;
+
+    // Load posts on page load
+    loadPosts();
+  </script>
+
 </body>
-</html>
+</html> 
