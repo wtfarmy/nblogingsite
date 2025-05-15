@@ -245,30 +245,70 @@
     }
   });
 
-  // Login form submit
+  // Disable Firebase auth login form submission
+  loginForm.removeEventListener('submit', () => {});
+
+  // Hardcoded admin credentials (change as needed)
+  const ADMIN_EMAIL = "admin@example.com";
+  const ADMIN_PASSWORD = "admin123";
+
+  // Remove Firebase auth listeners by overriding the login form submit
   loginForm.addEventListener('submit', e => {
     e.preventDefault();
-    const email = loginForm.email.value;
-    const password = loginForm.password.value;
+
+    const email = loginForm.email.value.trim();
+    const password = loginForm.password.value.trim();
+
     loginError.textContent = '';
-    loginForm.querySelector('button[type="submit"]').disabled = true;
 
-    auth.signInWithEmailAndPassword(email, password)
-      .then(() => {
-        loginForm.reset();
-      })
-      .catch(err => {
-        loginError.textContent = err.message;
-      })
-      .finally(() => {
-        loginForm.querySelector('button[type="submit"]').disabled = false;
-      });
+    // Simple validation
+    if (email === '' || password === '') {
+      loginError.textContent = 'Please enter email and password.';
+      return;
+    }
+
+    // Check against hardcoded credentials
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+      // Successful login
+
+      // Hide login section and show admin section
+      loginSection.style.display = 'none';
+      adminSection.style.display = 'block';
+      logoutBtn.style.display = 'inline-block';
+
+      // Reset form and error
+      loginForm.reset();
+      loginError.textContent = '';
+
+      // Optionally, fetch posts now that admin is logged in
+      fetchPosts();
+    } else {
+      loginError.textContent = 'Invalid email or password.';
+    }
   });
 
-  // Logout button
+  // Logout button to clear session and revert UI
   logoutBtn.addEventListener('click', () => {
-    auth.signOut();
+    // Show login, hide admin
+    loginSection.style.display = 'block';
+    adminSection.style.display = 'none';
+    logoutBtn.style.display = 'none';
+
+    // Clear any error messages and reset form
+    loginError.textContent = '';
+    loginForm.reset();
   });
+
+  // Initially, make sure admin section is hidden and login visible
+  loginSection.style.display = 'block';
+  adminSection.style.display = 'none';
+  logoutBtn.style.display = 'none';
+
+  // Remove Firebase auth state listener to prevent interference
+  if (typeof auth !== 'undefined' && auth.onAuthStateChanged) {
+    auth.onAuthStateChanged(() => {});
+  }
+
 
   // Save post
   postForm.addEventListener('submit', async e => {
@@ -388,6 +428,41 @@
       .replace(/'/g, "&#039;");
   }
 </script>
+<script>
+let loginCooldown = false;
 
+loginForm.addEventListener('submit', e => {
+  e.preventDefault();
+
+  if (loginCooldown) {
+    loginError.textContent = "Please wait a few seconds before trying again.";
+    return;
+  }
+
+  const email = loginForm.email.value;
+  const password = loginForm.password.value;
+  loginError.textContent = '';
+  loginForm.querySelector('button[type="submit"]').disabled = true;
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => {
+      loginForm.reset();
+    })
+    .catch(err => {
+      if (err.code === 'auth/too-many-requests') {
+        loginError.textContent = "Too many login attempts. Please try again later.";
+      } else {
+        loginError.textContent = err.message;
+      }
+    })
+    .finally(() => {
+      loginForm.querySelector('button[type="submit"]').disabled = false;
+      loginCooldown = true;
+      setTimeout(() => {
+        loginCooldown = false;
+      }, 5000); // 5 seconds cooldown before next attempt
+    });
+});
+</script>
 </body>
 </html>
