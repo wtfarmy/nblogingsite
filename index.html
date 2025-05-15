@@ -293,7 +293,18 @@
       footer > div {
         max-width: 100%;
       }
-    }.post-list {
+    } 
+  ;
+
+/* If you want height to adjust responsively, keep an aspect ratio */
+.post-list iframe {
+  width: 100%;
+  height: 200px; /* fixed height */
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: none;
+}
+    .post-list {
     max-width: 1200px;
     margin: 2rem auto;
     padding: 0 1rem;
@@ -344,20 +355,32 @@
   color: #ccc;
 }
 
-.post-card iframe {
-  width: 100%;
-  height: auto;
-  margin-top: 1rem;
-  border-radius: 8px;
-  border: none;
-}
-
   </style>
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
+<script>
+  let postsHTML = '';
+snapshot.forEach(doc => {
+  const post = doc.data();
+  const videoID = getYouTubeVideoID(post.youtubeUrl);
+  postsHTML += `
+    <article class="post-card">
+      <h2>${post.title}</h2>
+      <small>By ${post.author} on ${post.date}</small>
+      ${videoID ? `
+        <div class="post-video">
+          <iframe src="https://www.youtube.com/embed/${videoID}" allowfullscreen></iframe>
+        </div>
+      ` : ''}
+      <div class="post-body">${post.content}</div>
+    </article>
+  `;
+});
+container.innerHTML = postsHTML;
 
+</script>
 <body>
   <header>
     <nav class="top-nav">
