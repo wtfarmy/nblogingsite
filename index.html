@@ -4,422 +4,516 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vibrant Blog - Dark Mode & Footer Update</title>
+  <title>Ichigo Official Blogs - Clean & Modern</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    html,
-    body {
-      height: 100%;
+    /* Reset & Base */
+    * {
+      box-sizing: border-box;
+    }
+
+    body,
+    html {
       margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100%;
+      background: #fafafa;
+      color: #222;
       display: flex;
       flex-direction: column;
-    }
-
-    main {
-      flex: 1;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: white;
-      color: #222;
+      min-height: 100vh;
       transition: background 0.3s ease, color 0.3s ease;
     }
 
-    body.nightmode {
-      background: #222;
-      color: #ffffff;
+    body.dark {
+      background: #121212;
+      color: #eee;
     }
 
-    .top-nav {
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* --- NAVBAR --- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #ff5722;
+      border-bottom: 1px solid #ddd;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.5rem 1rem;
-      background: #f5f5f5;
-      border-bottom: 1px solid #ddd;
+      padding: 0.6rem 1.5rem;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 0.05);
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
-    body.nightmode .top-nav {
-      background: #222;
-      border-bottom: 1px solid #333;
-    }
-
-    .logo-title {
-      display: flex;
-      align-items: center;
+    body.dark header {
+      background: #1e1e1e;
+      border-color: #333;
+      box-shadow: 0 2px 5px rgb(255 255 255 / 0.05);
     }
 
     .logo {
-      width: 40px;
-      height: 40px;
-      margin-right: 0.5rem;
-    }
-
-    .site-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
       font-size: 1.4rem;
-      font-weight: bold;
+      color: #ffffff;
+      user-select: none;
     }
 
-    #nightmode-toggle {
+    .logo img {
+      height: 38px;
+      width: 38px;
+      border-radius: 6px;
+      object-fit: contain;
+    }
+
+    nav.nav-links {
+      display: flex;
+      gap: 1.8rem;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    nav.nav-links a {
+      color: #ffffff;
+      font-size: 1rem;
+      padding: 0.35rem 0.5rem;
+      border-radius: 4px;
+      transition: background 0.25s ease, color 0.25s ease;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    nav.nav-links a:hover {
+      background: #ffffff;
+      color: #161616;
+    }
+
+    body.dark nav.nav-links a {
+      color: #ccc;
+    }
+
+    body.dark nav.nav-links a:hover {
+      background: #ff5722;
+      color: white;
+    }
+
+    /* Night mode toggle button */
+    #toggle-dark-mode {
       background: transparent;
       border: none;
-      font-size: 1.5rem;
       cursor: pointer;
-      padding: 0.3rem 0.5rem;
+      font-size: 1.4rem;
+      color: #ffffff;
+      padding: 0.3rem;
       border-radius: 5px;
-      color: #555;
-      transition: background-color 0.3s, color 0.3s;
+      transition: background 0.25s ease, color 0.25s ease;
+      user-select: none;
     }
 
-    #nightmode-toggle:hover {
-      background-color: #ff3300;
+    #toggle-dark-mode:hover {
+      background: #ff4500;
       color: white;
     }
 
-    body.nightmode #nightmode-toggle {
-      color: #ff9933;
+    body.dark #toggle-dark-mode {
+      color: #ffffff;
     }
 
-    body.nightmode #nightmode-toggle:hover {
-      background-color: #cc6600;
+    body.dark #toggle-dark-mode:hover {
+      background: #ff5722;
       color: white;
     }
 
-    .bottom-nav {
-      display: flex;
-      justify-content: center;
-      background: #f5f5f5;
-      border-top: 1px solid #ddd;
+    /* Hamburger menu button - hidden on desktop */
+    #hamburger {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 1.6rem;
+      color: #ffffff;
+      padding: 0.3rem;
+      border-radius: 5px;
+      user-select: none;
+      transition: color 0.25s ease;
     }
 
-    body.nightmode .bottom-nav {
-      background: #222;
-      border-top: 1px solid #333;
+    #hamburger:hover {
+      color: #ffdacd;
     }
 
-    .nav-link {
-      color: #555;
-      padding: 0.8rem 1.2rem;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: color 0.3s ease;
+    body.dark #hamburger {
+      color: #ffffff;
     }
 
-    .nav-link:hover {
-      color: #ff3300;
+    body.dark #hamburger:hover {
+      color: #ff5722;
     }
 
-    .login-link {
-      font-weight: 700;
-      color: #ff3300;
-    }
-
-    .login-link:hover {
-      color: #cc0000;
-    }
-
-    #posts {
+    /* --- MAIN CONTENT --- */
+    main {
+      flex: 1 0 auto;
+      padding: 100px 20px 60px; /* top padding to clear fixed header */
+      max-width: 1200px;
+      margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 1.5rem;
-      padding: 1rem;
-      min-height: 200px;
     }
 
-    .post {
-      background: white;
+    .post-card {
+      background: #fff;
       border-radius: 12px;
       padding: 1.5rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.603);
+      display: flex;
+      flex-direction: column;
+      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .post:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    body.dark .post-card {
+      background: #222;
+      box-shadow: 0 4px 15px rgb(255 255 255 / 0.08);
+      color: #eee;
     }
 
-    body.nightmode .post {
-      background: #1e1e1e;
-      color: #ddd;
-      box-shadow: none;
-    }
-
-    .post h2 {
+    .post-card h2 {
       margin-top: 0;
-      color: #ff3300;
+      margin-bottom: 0.4rem;
+      color: #ff4500;
+      font-size: 1.4rem;
+      user-select: none;
     }
 
-    .post small {
-      color: #888;
-      display: block;
+    .post-card small {
+      color: #777;
       margin-bottom: 1rem;
     }
 
-    body.nightmode .post small {
+    body.dark .post-card small {
       color: #bbb;
-    }
-
-    .post p,
-    .post .post-content {
-      line-height: 1.6;
-      color: #333;
-    }
-
-    body.nightmode .post p,
-    body.nightmode .post .post-content {
-      color: #ccc;
     }
 
     .post-video iframe {
       width: 100%;
-      height: 200px;
-      border-radius: 8px;
+      aspect-ratio: 16 / 9;
+      border-radius: 10px;
       margin-bottom: 1rem;
       border: none;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
     }
 
-    .top-trending-box {
-      padding: 1rem;
-      margin: 1rem;
-      border-radius: 10px;
+    .post-body {
+      flex-grow: 1;
+      line-height: 1.45;
+      white-space: pre-wrap;
     }
 
-    body.nightmode .top-trending-box {
-      background: #111;
-    }
-
-    .top-trending-box h4 {
-      margin-top: 0;
-      margin-bottom: 0.8rem;
-      color: #ff3300;
-    }
-
-    .top-trending-box ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-    }
-
-    .top-trending-box li {
-      margin-bottom: 0.6rem;
-    }
-
-      .top-trending-box {
-      background-color: #222;
-      border-left: 5px solid #ff3300;
-      padding: 1rem;
-      margin-top: 2rem;
-      animation: fadeInUp 1s ease forwards;
-    }
-    .top-trending-box a:hover {
-      color: #ff3300;
-    }
-
+    /* --- FOOTER --- */
     footer {
-      background: linear-gradient(45deg, #ff0000, #cc0000);
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #ff4500, #cc3700);
       color: white;
-      padding: 2rem 1rem;
+      padding: 2rem 1.5rem;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-evenly;
-      font-size: 0.9rem;
+      justify-content: space-around;
+      gap: 2rem;
+      font-size: 0.95rem;
     }
 
     footer>div {
-      flex: 1 1 300px;
-      margin: 1rem 0;
-      max-width: 350px;
+      flex: 1 1 280px;
+      max-width: 320px;
     }
 
-    .footer-about p {
+    footer h4 {
+      margin-top: 0;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      user-select: none;
+    }
+
+    footer p {
       line-height: 1.5;
+      user-select: text;
     }
 
-    .footer-social a {
-      color: white;
-      margin-right: 1rem;
+    .social-icons {
+      display: flex;
+      gap: 1.3rem;
       font-size: 1.5rem;
+    }
+
+    .social-icons a {
+      color: white;
       transition: color 0.3s ease;
     }
 
-    .footer-social a:hover {
-      color: #ff6666;
+    .social-icons a:hover {
+      color: #ffbb99;
     }
 
-    .footer-subscribe form {
+    .subscribe-form {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 0.5rem;
     }
 
-    .footer-subscribe input[type="email"] {
-      flex: 1;
-      padding: 0.5rem;
-      border-radius: 5px;
+    .subscribe-form input[type="email"] {
+      flex-grow: 1;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
       border: none;
-      min-width: 180px;
+      font-size: 1rem;
+      outline-offset: 2px;
     }
 
-    .footer-subscribe button {
-      padding: 0.55rem 1rem;
-      box-shadow: 0 0 8px rgb(0, 0, 0);
-      border-radius: 10px;
+    .subscribe-form button {
+      background: #fff;
       border: none;
-      background: #ff0000;
-      color: rgb(255, 255, 255);
+      border-radius: 6px;
+      padding: 0.5rem 1.2rem;
+      font-weight: 700;
+      color: #ff4500;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      font-size: 1rem;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
-    .footer-subscribe button:hover {
-      background: #cc0000;
+    .subscribe-form button:hover {
+      background: #ff4500;
+      color: white;
     }
 
-    @media (max-width: 600px) {
-      .top-trending-box {
-        max-width: 100%;
-        margin: 1rem;
-      }
-
-      footer {
+    /* Responsive tweaks */
+    @media (max-width: 900px) {
+      nav.nav-links {
+        position: fixed;
+        top: 60px; /* height of header */
+        right: 0;
+        background: #474646;
+        border-left: 1px solid #ddd;
+        width: 220px;
+        height: calc(100% - 60px);
         flex-direction: column;
-        align-items: center;
+        padding-top: 1rem;
+        gap: 0;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        box-shadow: -3px 0 8px rgb(0 0 0 / 0.1);
+        z-index: 9999;
+        overflow-y: auto;
       }
 
-      footer > div {
-        max-width: 100%;
+      body.dark nav.nav-links {
+        background: #1e1e1e;
+        border-color: #333;
+        box-shadow: -3px 0 12px rgb(255 255 255 / 0.08);
       }
-    } 
-  ;
 
-/* If you want height to adjust responsively, keep an aspect ratio */
-.post-list iframe {
-  width: 100%;
-  height: 200px; /* fixed height */
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  border: none;
-}
-    .post-list {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
+      nav.nav-links.open {
+        transform: translateX(0);
+      }
 
-  @media (max-width: 900px) {
-    .post-list {
-      grid-template-columns: repeat(2, 1fr);
+      nav.nav-links a {
+        padding: 1rem 1.3rem;
+        border-bottom: 1px solid #ddd;
+        font-size: 1.15rem;
+      }
+
+      body.dark nav.nav-links a {
+        border-bottom-color: #333;
+      }
+
+      /* Hide nav links on desktop */
+      nav.nav-links {
+        display: flex;
+      }
+
+      /* Show hamburger */
+      #hamburger {
+        display: inline-block;
+      }
     }
-  }
 
-  @media (max-width: 600px) {
-    .post-list {
-      grid-template-columns: 1fr;
-    }
-  }
-
-.post-card {
-  background: white;
-  color: #222;
+    /* Smaller devices */
+    @media (max-width: 480px) {
+      main {
+        padding: 100px 15px 60px;
+        grid-template-columns: 1fr;
+      }
+    }/* --- Welcome Section --- */
+.welcome-section {
+  max-width: 900px;
+  margin: 120px auto 3rem;
+  padding: 1.5rem 2rem 2.5rem;
+  background: linear-gradient(135deg, #ff6f3c, #ff3e00);
+  color: white;
   border-radius: 12px;
-  box-shadow: 0 5px 12px rgba(0,0,0,0.1);
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  transition: background 0.3s ease, color 0.3s ease;
+  box-shadow: 0 6px 15px rgba(255, 62, 0, 0.35);
+  position: relative;
+  text-align: center;
+  user-select: none;
 }
 
-.nightmode .post-card {
-  background: #333;
-  color: #fff;
+.ribbon {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-5deg);
+  background: #ffffff;
+  color: #ff3e00;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.35rem 2.5rem;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  letter-spacing: 1.2px;
+  user-select: none;
+  z-index: 10;
 }
 
-.post-card h2 {
-  margin-top: 0;
-  color: #ff3300;
+.welcome-content h1 {
+  font-size: 2.6rem;
+  margin: 0 0 0.5rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.post-card small {
-  display: block;
-  margin-bottom: 1rem;
-  color: #666;
+.welcome-content p {
+  font-size: 1.2rem;
+  margin-bottom: 1.8rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.nightmode .post-card small {
-  color: #ccc;
+.btn-primary {
+  background: #fff;
+  color: #ff3e00;
+  padding: 0.75rem 2.25rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(255, 62, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+  user-select: none;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: #ff3e00;
+  color: white;
+  outline: none;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .welcome-section {
+    padding: 1rem 1.5rem 2rem;
+  }
+  .welcome-content h1 {
+    font-size: 1.9rem;
+  }
+  .welcome-content p {
+    font-size: 1rem;
+  }
+  .btn-primary {
+    padding: 0.6rem 1.8rem;
+    font-size: 1rem;
+  }
 }
 
   </style>
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
-<script>
-  let postsHTML = '';
-snapshot.forEach(doc => {
-  const post = doc.data();
-  const videoID = getYouTubeVideoID(post.youtubeUrl);
-  postsHTML += `
-    <article class="post-card">
-      <h2>${post.title}</h2>
-      <small>By ${post.author} on ${post.date}</small>
-      ${videoID ? `
-        <div class="post-video">
-          <iframe src="https://www.youtube.com/embed/${videoID}" allowfullscreen></iframe>
-        </div>
-      ` : ''}
-      <div class="post-body">${post.content}</div>
-    </article>
-  `;
-});
-container.innerHTML = postsHTML;
 
-</script>
 <body>
   <header>
-    <nav class="top-nav">
-      <div class="logo-title">
-        <img src="pngtree-colorful-blog-speech-bubble-vector-png-image_6633021.png" alt="Logo" class="logo" />
-        <span class="site-title">ICHIGO OFFICIAL BLOGS</span>
-      </div>
-      <button id="nightmode-toggle" aria-label="Toggle night mode">🌙</button>
+    <a href="index.html" class="logo" title="Ichigo Official Blogs">
+      <img src="pngtree-colorful-blog-speech-bubble-vector-png-image_6633021.png" alt="Ichigo Logo" />
+      Ichigo Blogs
+    </a>
+
+    <nav class="nav-links" id="nav-links">
+      <a href="index.html" title="Home">Home</a>
+      <a href="about.html" title="About">About</a>
+      <a href="contact.html" title="Contact">Contact</a>
     </nav>
-    <nav class="bottom-nav">
-      <a href="#" class="nav-link"><i class="fas fa-home"></i> Home</a>
-      <a href="#" class="nav-link"><i class="fas fa-file-alt"></i> Posts</a>
-      <a href="#" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
-      <a href="login.html" class="nav-link login-link"><i class="fas fa-sign-in-alt"></i> Login</a>
-    </nav>
+
+    <button id="toggle-dark-mode" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+
+    <button id="hamburger" aria-label="Toggle navigation menu" title="Toggle Menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
   </header>
- <main id="public-posts" class="post-list"></main>
+<br>
+<section class="welcome-section" aria-label="Welcome section">
+  <div class="ribbon" aria-hidden="true">Welcome</div>
+  <div class="welcome-content">
+    <h1>Welcome to Ichigo Official Blogs</h1>
+    <p>Discover clean, modern, and insightful blog posts about technology, programming, and lifestyle. Stay updated and inspired!</p>
+    <a href="#latest-posts" class="btn-primary" role="button">Explore Latest Posts</a>
+  </div>
+</section>
+
+<br>
+ 
+  <main id="posts-container" tabindex="0" aria-live="polite" aria-label="Blog Posts">
+    <!-- Blog posts will load here -->
+  </main>
+<br>
+<br>
+
   <footer>
-    <div class="footer-about">
-      <h4>About Vibrant Blog</h4>
-      <p>Your daily dose of tech, design, and development. Stay updated with trends and tutorials from experts!</p>
+    <div>
+      <h4>Ichigo Official Blogs</h4>
+      <p>Your go-to place for the latest updates, tech insights, and blog tutorials. Stay tuned!</p>
     </div>
-    <div class="footer-subscribe">
-      <h4>Subscribe to our newsletter</h4>
-      <form id="subscribe-form" action="#" method="post" onsubmit="handleSubscribe(event)">
-        <input type="email" id="subscribe-email" placeholder="Enter your email" required />
+    <div>
+      <h4>Subscribe</h4>
+      <form class="subscribe-form" action="https://formsubmit.co/your-email@example.com" method="POST" target="_blank" novalidate>
+        <input type="email" name="email" placeholder="Enter your email" required />
         <button type="submit">Subscribe</button>
       </form>
     </div>
-    <div class="footer-social">
-      <h4>Follow us</h4>
-      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <div>
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
     </div>
   </footer>
+  <!-- Firebase and JS -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
   <script>
-   // Firebase configuration
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyCdeme0EVSoDmtKS2kjJb9lz_om82VxTSo",
       authDomain: "bloging-1e7df.firebaseapp.com",
@@ -429,80 +523,97 @@ container.innerHTML = postsHTML;
       appId: "1:177297831056:web:4cc414cdeb9e4ebe14d415"
     };
 
+    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    const postsContainer = document.getElementById('posts');
-  // Extract video ID function
-  function getYouTubeVideoID(url) {
-    if (!url) return null;
-    const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/;
-    const match = url.match(regex);
-    return match ? match[1] : null;
-  }
+    const container = document.getElementById('posts-container');
 
-  // Load public posts
-  async function loadPublicPosts() {
-    const container = document.getElementById('public-posts');
-    try {
-      const snapshot = await db.collection('posts').orderBy('createdAt', 'desc').get();
-      if (snapshot.empty) {
-        container.innerHTML = '<p>No blog posts yet.</p>';
-        return;
-      }
-
-      container.innerHTML = '';
-      snapshot.forEach(doc => {
-        const post = doc.data();
-        const videoID = getYouTubeVideoID(post.youtubeUrl);
-        const postHTML = `
-          <article class="post-card">
-            <h2>${post.title}</h2>
-            <small>By ${post.author} on ${post.date}</small>
-            ${videoID ? `
-              <div class="post-video">
-                <iframe src="https://www.youtube.com/embed/${videoID}" allowfullscreen></iframe>
-              </div>
-            ` : ''}
-            <div class="post-body">${post.content}</div>
-          </article>
-        `;
-        container.innerHTML += postHTML;
-      });
-    } catch (err) {
-      container.innerHTML = `<p>Error loading posts: ${err.message}</p>`;
+    function getYouTubeVideoID(url) {
+      if (!url) return null;
+      const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
     }
-  }
 
-  loadPublicPosts();
+    async function loadPosts() {
+      try {
+        const snapshot = await db.collection('posts').orderBy('date', 'desc').get();
+        if (snapshot.empty) {
+          container.innerHTML = '<p>No posts found.</p>';
+          return;
+        }
+        let html = '';
+        snapshot.forEach(doc => {
+          const post = doc.data();
+          let dateStr = post.date;
+          if (post.date?.toDate) {
+            dateStr = post.date.toDate().toLocaleDateString();
+          }
+          const videoID = getYouTubeVideoID(post.youtubeUrl);
+          html += `
+            <article class="post-card" tabindex="0">
+              <h2>${post.title}</h2>
+              <small>By ${post.author} • ${dateStr}</small>
+              ${videoID ? `<div class="post-video"><iframe src="https://www.youtube.com/embed/${videoID}" allowfullscreen loading="lazy" referrerpolicy="no-referrer"></iframe></div>` : ''}
+              <div class="post-body">${post.content}</div>
+            </article>
+          `;
+        });
+        container.innerHTML = html;
+      } catch (err) {
+        console.error("Failed to load posts", err);
+        container.innerHTML = "<p>Failed to load posts. Please try again later.</p>";
+      }
+    }
 
-
-    // Night mode toggle
-    const nightToggle = document.getElementById('nightmode-toggle');
-
-    function updateToggleIcon() {
-      if (document.body.classList.contains('nightmode')) {
-        nightToggle.textContent = '☀️';
+    loadPosts();
+  </script>
+  <script>
+    // Dark mode toggle
+    const toggleBtn = document.getElementById('toggle-dark-mode');
+    const body = document.body;
+    toggleBtn.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      // Change icon accordingly
+      const icon = toggleBtn.querySelector('i');
+      if (body.classList.contains('dark')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
       } else {
-        nightToggle.textContent = '🌙';
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
       }
-    }
-
-    nightToggle.addEventListener('click', () => {
-      document.body.classList.toggle('nightmode');
-      localStorage.setItem('nightmode', document.body.classList.contains('nightmode'));
-      updateToggleIcon();
     });
 
-    if (localStorage.getItem('nightmode') === 'true') {
-      document.body.classList.add('nightmode');
-    }
-    updateToggleIcon();
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
 
-  
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      // Toggle hamburger icon to X (close)
+      const icon = hamburger.querySelector('i');
+      if (navLinks.classList.contains('open')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-xmark');
+      } else {
+        icon.classList.remove('fa-xmark');
+        icon.classList.add('fa-bars');
+      }
+    });
 
-    
-
+    // Optional: Close nav when clicking a link (on mobile)
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (navLinks.classList.contains('open')) {
+          navLinks.classList.remove('open');
+          const icon = hamburger.querySelector('i');
+          icon.classList.remove('fa-xmark');
+          icon.classList.add('fa-bars');
+        }
+      });
+    });
   </script>
 </body>
 
