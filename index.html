@@ -12,13 +12,15 @@
       box-sizing: border-box;
     }
 
-    body,
-    html {
+    body{
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       height: 100%;
-      background: #fafafa;
+     background-image: url('backimg122.jpg');
+  background-size: cover;      /* Makes the image cover the entire div */
+  background-position: center; /* Centers the image */
+  background-repeat:no-repeat;
       color: #222;
       display: flex;
       flex-direction: column;
@@ -42,7 +44,7 @@
       top: 0;
       left: 0;
       right: 0;
-      background-color: #ff5722;
+      background-color: #ff261f;
       border-bottom: 1px solid #ddd;
       display: flex;
       align-items: center;
@@ -222,11 +224,12 @@
     /* --- FOOTER --- */
     footer {
       flex-shrink: 0;
-      background: linear-gradient(135deg, #ff4500, #cc3700);
+      background: linear-gradient(to right, #ff6a65,#ff0000 );
       color: white;
       padding: 2rem 1.5rem;
       display: flex;
       flex-wrap: wrap;
+      margin: 0px;
       justify-content: space-around;
       gap: 2rem;
       font-size: 0.95rem;
@@ -303,8 +306,9 @@
         position: fixed;
         top: 60px; /* height of header */
         right: 0;
-        background: #474646;
-        border-left: 1px solid #ddd;
+        color: rgb(29, 29, 29);
+        background: #ffffff;
+        border-left: 1px solid #525252;
         width: 220px;
         height: calc(100% - 60px);
         flex-direction: column;
@@ -329,6 +333,7 @@
 
       nav.nav-links a {
         padding: 1rem 1.3rem;
+        color: rgb(26, 26, 26);
         border-bottom: 1px solid #ddd;
         font-size: 1.15rem;
       }
@@ -359,7 +364,7 @@
   max-width: 900px;
   margin: 120px auto 3rem;
   padding: 1.5rem 2rem 2.5rem;
-  background: linear-gradient(135deg, #ff6f3c, #ff3e00);
+ background: linear-gradient(to right, #ff6a65,#ff0000 );
   color: white;
   border-radius: 12px;
   box-shadow: 0 6px 15px rgba(255, 62, 0, 0.35);
@@ -405,7 +410,7 @@
 
 .btn-primary {
   background: #fff;
-  color: #ff3e00;
+  color: #ff6600;
   padding: 0.75rem 2.25rem;
   font-weight: 700;
   font-size: 1.1rem;
@@ -422,7 +427,7 @@
 
 .btn-primary:hover,
 .btn-primary:focus {
-  background: #ff3e00;
+  background-color: #ff261f;
   color: white;
   outline: none;
 }
@@ -443,6 +448,80 @@
     font-size: 1rem;
   }
 }
+#popup-notification {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  max-width: 320px;
+  background: #ff5722;  /* Matches your header orange */
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(255, 87, 34, 0.4);
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 1500;
+}
+
+#popup-notification.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+#popup-notification button#popup-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 0.3rem 0 0.6rem;
+  user-select: none;
+  transition: color 0.25s ease;
+}
+
+#popup-notification button#popup-close:hover,
+#popup-notification button#popup-close:focus {
+  color: #ffbb99;
+  outline: none;
+}
+
+/* Dark mode adaptation */
+body.dark #popup-notification {
+  background: #e64a19;
+  box-shadow: 0 4px 12px rgba(230, 74, 25, 0.6);
+  color: #fff;
+}
+.centersection{
+  text-align: center;
+  align-items: center;
+}
+.headline h2{
+ background: #ffffff;
+  color: #ff0055;
+  padding: 0.75rem 2.25rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(255, 62, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+  user-select: none;
+}
 
   </style>
 </head>
@@ -451,7 +530,7 @@
   <header>
     <a href="index.html" class="logo" title="Ichigo Official Blogs">
       <img src="pngtree-colorful-blog-speech-bubble-vector-png-image_6633021.png" alt="Ichigo Logo" />
-      Ichigo Blogs
+     Adil Zaidi Kavish
     </a>
 
     <nav class="nav-links" id="nav-links">
@@ -468,24 +547,24 @@
       <i class="fa-solid fa-bars"></i>
     </button>
   </header>
-<br>
+  <br>
 <section class="welcome-section" aria-label="Welcome section">
   <div class="ribbon" aria-hidden="true">Welcome</div>
   <div class="welcome-content">
-    <h1>Welcome to Ichigo Official Blogs</h1>
+    <h1>To  Adil Zaidi Kavish Blogs </h1>
     <p>Discover clean, modern, and insightful blog posts about technology, programming, and lifestyle. Stay updated and inspired!</p>
     <a href="#latest-posts" class="btn-primary" role="button">Explore Latest Posts</a>
   </div>
 </section>
-
-<br>
- 
   <main id="posts-container" tabindex="0" aria-live="polite" aria-label="Blog Posts">
     <!-- Blog posts will load here -->
   </main>
 <br>
 <br>
-
+  <div id="popup-notification" role="alert" aria-live="assertive" aria-atomic="true">
+  <p>Welcome to Ichigo Official Blogs! Enjoy the latest posts.</p>
+  <button aria-label="Close notification" id="popup-close">&times;</button>
+</div>
   <footer>
     <div>
       <h4>Ichigo Official Blogs</h4>
@@ -615,6 +694,37 @@
       });
     });
   </script>
+  <script>
+
+  // Show popup notification function
+  function showPopup(message, duration = 4000) {
+    const popup = document.getElementById('popup-notification');
+    popup.querySelector('p').textContent = message;
+    popup.classList.add('show');
+
+    // Hide after duration
+    setTimeout(() => {
+      popup.classList.remove('show');
+    }, duration);
+  }
+
+  // Close button handler
+  document.getElementById('popup-close').addEventListener('click', () => {
+    document.getElementById('popup-notification').classList.remove('show');
+  });
+
+  // Example: Show popup on page load
+  window.addEventListener('load', () => {
+    showPopup('Welcome to Ichigo Official Blogs! Enjoy the latest posts.');
+  });
+
+
+  </script>
+  <div id="popup-notification" role="alert" aria-live="assertive" aria-atomic="true">
+  <p>Welcome to Ichigo Official Blogs! Enjoy the latest posts.</p>
+  <button aria-label="Close notification" id="popup-close">&times;</button>
+</div>
+
 </body>
 
 </html>
