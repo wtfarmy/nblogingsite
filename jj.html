@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ichigo Official Blogs - Clean & Modern</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, rgba(0, 255, 242, 0.03), #ffffff, #ff00510c);
+            color: black;
+        }
+
+        @media (max-width: 600px) {
+            .search-container input {
+                display: block;
+                width: 100%;
+            }
+        }
+
+        .mario-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            height: 50px;
+        }
+
+        .mario {
+            position: absolute;
+            height: auto;
+            width: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: run-across 10s linear infinite;
+        }
+
+        @keyframes run-across {
+            0% {
+                left: -60px;
+            }
+
+            100% {
+                left: calc(100% + 60px);
+                /* Move across container */
+            }
+        }
+
+
+        @keyframes run {
+            0% {
+                left: -200px;
+                /* Mario starts off-screen */
+            }
+
+            50% {
+                left: 50%;
+                /* Mario reaches the middle of the screen */
+                transform: translateY(-50%) translateX(-50%);
+            }
+
+            100% {
+                left: 100%;
+                /* Mario runs off the screen */
+            }
+        }
+
+        header {
+            /* background: rgb(32, 32, 32);\ */
+        background: linear-gradient(40deg, rgb(21, 21, 21) 50%, rgb(255, 0, 81) 50%, #f90000);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 12px black;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(90deg, #ff005d, #d3d1d2, #ff0040, #958a91);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            font-weight: 900;
+            font-family: fantasy;
+            animation: shimmer 5s linear infinite;
+        }
+
+        .logo img {
+            height: 35px;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes floatDragon {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            background: #000;
+            border-radius: 2px;
+        }    .sidebar {
+
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 200px;
+            height: 100%;
+            background: linear-gradient(#090909, #010101d2, #010101cb, #00000084, #ff002f72);
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+
+
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar .close-btn {
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            text-align: right;
+        }
+
+        .sidebar a {
+            display: block;
+            background: linear-gradient(90deg, #e4d2d2, #858282, rgb(255, 255, 254), rgb(181, 114, 114));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            font-weight: 900;
+            font-family: fantasy;
+            animation: shimmer 5s linear infinite;
+            text-decoration: none;
+            padding: 0.8rem 0;
+        }
+
+        .sidebar a:hover {
+            background-color: #ff0000;
+        }
+
+
+        #loginBtn {
+            color: white;
+            background: linear-gradient(to right, #ff003c, #8c00ff);
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
+
+        #logoutBtn {
+            color: rgb(33, 33, 33);
+            background-color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: end;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .characters img {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .sidebar a i {
+            margin-right: 8px;
+        }
+
+        .sidebar {
+            z-index: 1000;
+        }
+
+        .nft-section {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgb(255, 255, 255);
+             background-image: url('backimg122.jpg');
+  background-size: cover;      /* Makes the image cover the entire div */
+  background-position: center; /* Centers the image */
+  background-repeat:no-repeat;
+        }
+
+        .nft-section h2 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .nft-section p {
+            color: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        .nft-frame-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .nft-frame {
+            flex: 1 1 auto;
+            max-width: 120px;
+            height: 220px;
+            animation: float 3s ease-in-out infinite;
+            clip-path: polygon(20% 0, 80% 0, 100% 100%, 0% 100%);
+            overflow: hidden;
+            border: 3px solid rgb(255, 0, 72);
+            transition: transform 0.3s;
+        }
+
+        .nft-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .nft-frame.center {
+            max-width: 160px;
+            height: 250px;
+            clip-path: polygon(15% 0, 85% 0, 100% 100%, 0% 100%);
+        }
+
+
+        /* 🔻 Responsive behavior: Resize frames */
+        @media (max-width: 768px) {
+            .nft-frame {
+                max-width: 80px;
+                height: 150px;
+            }
+
+            .nft-frame.center {
+                max-width: 110px;
+                height: 170px;
+            }
+
+            /* 🔻 Hide the 4th and 5th NFTs */
+            .nft-frame.hide-mobile {
+                display: none;
+            }
+
+            .nft-section h2 {
+                font-size: 1.5em;
+            }
+
+            .nft-section p {
+                font-size: 0.9em;
+            }
+
+        }
+   /* Retro Grid Background */
+        .retrobg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.093) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        /* Scanline Flicker */
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: repeating-linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0.921) 0px,
+                    rgb(0, 0, 0) 1px,
+                    transparent 2px,
+                    transparent 4px);
+            z-index: 1;
+            animation: flicker 0.15s infinite;
+        }
+
+        .characters {
+            position: relative;
+            z-index: 1;
+        }
+
+        body.sidebar-open .characters img {
+            animation-play-state: paused;
+        }
+        #userEmail {
+            display: none;
+        }
+
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        /* Hamburger lines color fix */
+        .hamburger span {
+            background: #fff;
+        }
+
+    /* --- MAIN CONTENT --- */
+    main {
+      flex: 1 0 auto;
+      padding: 100px 20px 60px; /* top padding to clear fixed header */
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .post-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.603);
+      display: flex;
+      flex-direction: column;
+      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    body.dark .post-card {
+      background: #222;
+      box-shadow: 0 4px 15px rgb(255 255 255 / 0.08);
+      color: #eee;
+    }
+
+    .post-card h2 {
+      margin-top: 0;
+      margin-bottom: 0.4rem;
+      color: #ff4500;
+      font-size: 1.4rem;
+      user-select: none;
+    }
+
+    .post-card small {
+      color: #777;
+      margin-bottom: 1rem;
+    }
+
+    body.dark .post-card small {
+      color: #bbb;
+    }
+
+    .post-video iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      border: none;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .post-body {
+      flex-grow: 1;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      flex-shrink: 0;
+      background: linear-gradient(to right, #ff6a65,#ff0000 );
+      color: white;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0px;
+      justify-content: space-around;
+      gap: 2rem;
+      font-size: 0.95rem;
+    }
+
+    footer>div {
+      flex: 1 1 280px;
+      max-width: 320px;
+    }
+
+    footer h4 {
+      margin-top: 0;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      user-select: none;
+    }
+
+    footer p {
+      line-height: 1.5;
+      user-select: text;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 1.3rem;
+      font-size: 1.5rem;
+    }
+
+    .social-icons a {
+      color: white;
+      transition: color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      color: #ffbb99;
+    }
+
+    .subscribe-form {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+    }
+
+    .subscribe-form input[type="email"] {
+      flex-grow: 1;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+      outline-offset: 2px;
+    }
+
+    .subscribe-form button {
+      background: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5rem 1.2rem;
+      font-weight: 700;
+      color: #ff4500;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .subscribe-form button:hover {
+      background: #ff4500;
+      color: white;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 900px) {
+      nav.nav-links {
+        position: fixed;
+        top: 60px; /* height of header */
+        right: 0;
+        color: rgb(29, 29, 29);
+        background: #ffffff;
+        border-left: 1px solid #525252;
+        width: 220px;
+        height: calc(100% - 60px);
+        flex-direction: column;
+        padding-top: 1rem;
+        gap: 0;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        box-shadow: -3px 0 8px rgb(0 0 0 / 0.1);
+        z-index: 9999;
+        overflow-y: auto;
+      }
+
+      body.dark nav.nav-links {
+        background: #1e1e1e;
+        border-color: #333;
+        box-shadow: -3px 0 12px rgb(255 255 255 / 0.08);
+      }
+
+      nav.nav-links.open {
+        transform: translateX(0);
+      }
+
+      nav.nav-links a {
+        padding: 1rem 1.3rem;
+        color: rgb(26, 26, 26);
+        border-bottom: 1px solid #ddd;
+        font-size: 1.15rem;
+      }
+
+      body.dark nav.nav-links a {
+        border-bottom-color: #333;
+      }
+
+      /* Hide nav links on desktop */
+      nav.nav-links {
+        display: flex;
+      }
+
+      /* Show hamburger */
+      #hamburger {
+        display: inline-block;
+      }
+    }
+
+    /* Smaller devices */
+    @media (max-width: 480px) {
+      main {
+        padding: 100px 15px 60px;
+        grid-template-columns: 1fr;
+      }
+    }/* --- Welcome Section --- */
+.welcome-section {
+  max-width: 900px;
+  margin: 120px auto 3rem;
+  padding: 1.5rem 2rem 2.5rem;
+ background: linear-gradient(to right, #ff6a65,#ff0000 );
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(255, 62, 0, 0.35);
+  position: relative;
+  text-align: center;
+  user-select: none;
+}
+
+.ribbon {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-5deg);
+  background: #ffffff;
+  color: #ff3e00;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.35rem 2.5rem;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  letter-spacing: 1.2px;
+  user-select: none;
+  z-index: 10;
+}
+
+.welcome-content h1 {
+  font-size: 2.6rem;
+  margin: 0 0 0.5rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.welcome-content p {
+  font-size: 1.2rem;
+  margin-bottom: 1.8rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background: #fff;
+  color: #ff6600;
+  padding: 0.75rem 2.25rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(255, 62, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+  user-select: none;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #ff261f;
+  color: white;
+  outline: none;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .welcome-section {
+    padding: 1rem 1.5rem 2rem;
+  }
+  .welcome-content h1 {
+    font-size: 1.9rem;
+  }
+  .welcome-content p {
+    font-size: 1rem;
+  }
+  .btn-primary {
+    padding: 0.6rem 1.8rem;
+    font-size: 1rem;
+  }
+}
+#popup-notification {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  max-width: 320px;
+  background: #ff5722;  /* Matches your header orange */
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(255, 87, 34, 0.4);
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 1500;
+}
+
+#popup-notification.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+#popup-notification button#popup-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 0.3rem 0 0.6rem;
+  user-select: none;
+  transition: color 0.25s ease;
+}
+
+#popup-notification button#popup-close:hover,
+#popup-notification button#popup-close:focus {
+  color: #ffbb99;
+  outline: none;
+}
+
+/* Dark mode adaptation */
+body.dark #popup-notification {
+  background: #e64a19;
+  box-shadow: 0 4px 12px rgba(230, 74, 25, 0.6);
+  color: #fff;
+}
+.centersection{
+  text-align: center;
+  align-items: center;
+}
+.headline h2{
+ background: #ffffff;
+  color: #ff0055;
+  padding: 0.75rem 2.25rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(255, 62, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+  user-select: none;
+}
+
+  </style>
+</head>
+
+<body>
+  
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <br>
+        <span id="userEmail"></span>
+        <img id="userPic" class="profile-pic" style="display:none;" />
+        <button id="loginBtn">Login</button>
+        <a href="#" onclick="toggleSidebar()"><i class="fas fa-calendar-alt"></i> <b>Events</b></a>
+        <a href="membership.html" onclick="toggleSidebar()"><i class="fas fa-user-plus"></i> <b>Membership</b></a>
+        <a href="#" onclick="toggleSidebar()"><i class="fas fa-tshirt"></i> <b>Merchandise</b></a>
+        <a href="#" onclick="toggleSidebar()"><i class="fas fa-video"></i> <b>Creators</b></a>
+        <br>
+        <button id="logoutBtn" onclick="logout()">Logout</button>
+    </div>
+    <header>
+        <div class="logo">
+            <img src="1000001908_79329a9b1f3f1abc226717bfe195d92b-4_22_2025, 3_13_32 AM (1).png" alt="Harjus Logo" />
+            <b>Adil Zaidi Blogs</b>
+        </div>
+
+        <div class="mario-container">
+            <img src="mario-removebg-preview.png" alt="Mario" class="mario">
+        </div>
+        <!-- 🔍 Search Icon -->
+        <button class="icon-btn" id="openSearch" title="Open Search">
+            <i class="fas fa-search"></i>
+        </button>
+
+        <!-- ❌ Close Search Icon -->
+        <button class="icon-btn hide" id="closeSearch" title="Close Search">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- ☰ Hamburger Menu Icon -->
+        <button class="icon-btn" id="menuToggle" title="Toggle Menu" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Overlay Search Area -->
+        <div class="search-overlay" id="searchOverlay">
+            <input type="search" id="searchBar" placeholder="Search tournaments, games, Free Fire..." autocomplete="on"
+                inputmode="text" />
+            <ul id="resultList"></ul>
+        </div>
+    </header>
+    <div class="nft-section">
+        <br>
+        <section class="welcome-section" aria-label="Welcome section">
+            <div class="ribbon" aria-hidden="true">Welcome</div>
+            <div class="welcome-content">
+                <h1>To Adil Zaidi Kavish Blogs</h1>
+                <p>Discover clean, modern, and insightful blog posts about technology, programming, and lifestyle. Stay
+                    updated and inspired!</p>
+                <a href="#latest-posts" class="btn-primary" role="button">Explore Latest Posts</a>
+            </div>
+            <div class="scalelines"></div>
+            <div class="retrobg"></div>
+        </section>
+
+    </div>
+
+    <div class="game-slider-container">
+        <div class="badgetexticon">
+            <span class="badgtext">✨</span>
+            Most Popular
+        </div>
+        <br>
+        
+  <main id="posts-container" tabindex="0" aria-live="polite" aria-label="Blog Posts">
+    <!-- Blog posts will load here -->
+  </main>
+<br>
+<br>
+  <div id="popup-notification" role="alert" aria-live="assertive" aria-atomic="true">
+  <p>Welcome to Ichigo Official Blogs! Enjoy the latest posts.</p>
+  <button aria-label="Close notification" id="popup-close">&times;</button>
+</div>
+  <footer>
+    <div>
+      <h4>Ichigo Official Blogs</h4>
+      <p>Your go-to place for the latest updates, tech insights, and blog tutorials. Stay tuned!</p>
+    </div>
+    <div>
+      <h4>Subscribe</h4>
+      <form class="subscribe-form" action="https://formsubmit.co/your-email@example.com" method="POST" target="_blank" novalidate>
+        <input type="email" name="email" placeholder="Enter your email" required />
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+    <div>
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </footer>
+  <!-- Firebase and JS -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script>
+
+            function redirectToSecure() {
+                window.location.href = "secured-page.html";
+            }
+
+            function toggleSidebar() {
+                document.getElementById('sidebar').classList.toggle('open');
+                document.body.classList.toggle('sidebar-open');
+            }
+
+            function toggleNotification() {
+                const panel = document.getElementById('notificationPanel');
+                panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+            }
+        </script>
+  <script>
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyCdeme0EVSoDmtKS2kjJb9lz_om82VxTSo",
+      authDomain: "bloging-1e7df.firebaseapp.com",
+      projectId: "bloging-1e7df",
+      storageBucket: "bloging-1e7df.appspot.com",
+      messagingSenderId: "177297831056",
+      appId: "1:177297831056:web:4cc414cdeb9e4ebe14d415"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const container = document.getElementById('posts-container');
+
+    function getYouTubeVideoID(url) {
+      if (!url) return null;
+      const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
+    }
+
+    async function loadPosts() {
+      try {
+        const snapshot = await db.collection('posts').orderBy('date', 'desc').get();
+        if (snapshot.empty) {
+          container.innerHTML = '<p>No posts found.</p>';
+          return;
+        }
+        let html = '';
+        snapshot.forEach(doc => {
+          const post = doc.data();
+          let dateStr = post.date;
+          if (post.date?.toDate) {
+            dateStr = post.date.toDate().toLocaleDateString();
+          }
+          const videoID = getYouTubeVideoID(post.youtubeUrl);
+          html += `
+            <article class="post-card" tabindex="0">
+              <h2>${post.title}</h2>
+              <small>By ${post.author} • ${dateStr}</small>
+              ${videoID ? `<div class="post-video"><iframe src="https://www.youtube.com/embed/${videoID}" allowfullscreen loading="lazy" referrerpolicy="no-referrer"></iframe></div>` : ''}
+              <div class="post-body">${post.content}</div>
+            </article>
+          `;
+        });
+        container.innerHTML = html;
+      } catch (err) {
+        console.error("Failed to load posts", err);
+        container.innerHTML = "<p>Failed to load posts. Please try again later.</p>";
+      }
+    }
+
+    loadPosts();
+  </script>  <script>
+            const keywordPages = {
+                "tournaments": "tournaments.html",
+                "games": "games.html",
+                "gaming": "gaming.html",
+                "match": "match.html",
+                "free fire": "freefire.html",
+                "pubg": "pubg.html",
+                "minecraft": "minecraft.html",
+                "valorant": "valorant.html",
+                "call of duty": "cod.html",
+                "mobile legends": "mobilelegends.html"
+            };
+
+            const openBtn = document.getElementById("openSearch");
+            const closeBtn = document.getElementById("closeSearch");
+            const overlay = document.getElementById("searchOverlay");
+            const searchBar = document.getElementById("searchBar");
+            const resultList = document.getElementById("resultList");
+
+            // Open search
+            openBtn.addEventListener("click", () => {
+                overlay.classList.add("active");
+                openBtn.classList.add("hide");
+                closeBtn.classList.remove("hide");
+                setTimeout(() => searchBar.focus(), 300);
+            });
+
+            // Close search
+            closeBtn.addEventListener("click", () => {
+                overlay.classList.remove("active");
+                openBtn.classList.remove("hide");
+                closeBtn.classList.add("hide");
+                searchBar.value = "";
+                resultList.innerHTML = "";
+            });
+
+            // Search logic
+            searchBar.addEventListener("keyup", (e) => {
+                const input = searchBar.value.toLowerCase().trim();
+                resultList.innerHTML = "";
+
+                if (e.key === "Enter") {
+                    for (let keyword in keywordPages) {
+                        if (input.includes(keyword)) {
+                            window.location.href = keywordPages[keyword];
+                            return;
+                        }
+                    }
+                    alert("No matching page found.");
+                } else {
+                    const filtered = Object.keys(keywordPages).filter(keyword =>
+                        keyword.includes(input)
+                    );
+
+                    filtered.forEach(match => {
+                        const li = document.createElement("li");
+                        li.textContent = match;
+                        li.onclick = () => {
+                            window.location.href = keywordPages[match];
+                        };
+                        resultList.appendChild(li);
+                    });
+
+                    if (filtered.length === 0 && input) {
+                        resultList.innerHTML = "<li>No results found</li>";
+                    }
+                }
+            });
+
+    
+        </script>
+<script>
+
+            function redirectToSecure() {
+                window.location.href = "secured-page.html";
+            }
+
+            function toggleSidebar() {
+                document.getElementById('sidebar').classList.toggle('open');
+                document.body.classList.toggle('sidebar-open');
+            }
+
+            function toggleNotification() {
+                const panel = document.getElementById('notificationPanel');
+                panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+            }
+        </script>
+  <script>
+
+  // Show popup notification function
+  function showPopup(message, duration = 4000) {
+    const popup = document.getElementById('popup-notification');
+    popup.querySelector('p').textContent = message;
+    popup.classList.add('show');
+
+    // Hide after duration
+    setTimeout(() => {
+      popup.classList.remove('show');
+    }, duration);
+  }
+
+  // Close button handler
+  document.getElementById('popup-close').addEventListener('click', () => {
+    document.getElementById('popup-notification').classList.remove('show');
+  });
+
+  // Example: Show popup on page load
+  window.addEventListener('load', () => {
+    showPopup('Welcome to Ichigo Official Blogs! Enjoy the latest posts.');
+  });
+
+
+  </script>
+  
+
+</body>
+
+</html>
