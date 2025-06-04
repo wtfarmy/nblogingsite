@@ -14,7 +14,7 @@
         }
 
         body {
-            background: linear-gradient(to right, rgba(0, 255, 242, 0.03), #ffffff, #ff00510c);
+           background-color: black;
             color: black;
         }
 
@@ -73,7 +73,7 @@
 
         header {
             /* background: rgb(32, 32, 32);\ */
-        background: linear-gradient(40deg, rgb(20, 20, 20) 50%, rgb(255, 0, 81) 50%, #f90000);
+        background: linear-gradient( rgb(39, 39, 39),#000);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -99,6 +99,7 @@
 
         .logo img {
             height: 35px;
+            border-radius: 50%;
             margin-right: 0.5rem;
         }
 
@@ -132,22 +133,160 @@
             border-radius: 2px;
         }
 
-        .hero {
-            text-align: center;
-            padding: 2rem 1rem 0;
-        }
+       
+    .hero {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 30, 0.3)),
+        url('bg.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 60px 40px;
+    }
 
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 900;
-            line-height: 1;
-        }
+    .hero-content {
+      max-width: 600px;
+      animation: fadeInUp 2s ease forwards;
+    }
 
-        .hero h1 .sale {
-            color: green;
-            font-style: italic;
-            font-size: 2rem;
-        }
+    .hero-content h1 {
+      font-size: 48px;
+      color: white;
+      font-weight: 800;
+      margin-bottom: 30px;
+    }
+
+    .get-started-btn {
+      display: inline-block;
+      background: white;
+      color: black;
+      padding: 12px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-bottom: 30px;
+      transition: 0.3s;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+      animation-delay: 2.5s;
+    }
+
+    .get-started-btn span {
+      margin-left: 10px;
+    }
+
+    .get-started-btn:hover {
+      background: #ddd;
+    }
+
+    .hero-content p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgb(255, 255, 255);
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+      animation-delay: 2.8s;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Apply updated shorter durations */
+   
+
+    .contact-btn {
+      animation: fadeIn 0.5s ease forwards;
+      animation-delay: 1s;
+    }
+
+    .hero-content {
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .get-started-btn {
+      animation: fadeIn 0.5s ease forwards;
+      animation-delay: 1.2s;
+    }
+
+    .hero-content p {
+      animation: fadeIn 0.5s ease forwards;
+      animation-delay: 1.3s;
+    }
+
+
+    @media (max-width: 1024px) {
+    
+ 
+
+      .hero {
+        padding: 120px 30px 40px;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .hero-content h1 {
+        font-size: 36px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        height: auto;
+        padding: 140px 20px 60px;
+      }
+
+      .hero-content h1 {
+        font-size: 28px;
+      }
+
+      .get-started-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+
+      .hero-content p {
+        font-size: 14px;
+      }
+
+      .contact-btn {
+        margin: 10px 0;
+      }
+    }
 
         .characters {
             display: flex;
@@ -670,7 +809,7 @@
             text-align: center;
             padding: 40px 20px;
             color: rgb(255, 255, 255);
-             background-image: url('backimg122.jpg');
+             background-image: url('bg.jpg');
   background-size: cover;      /* Makes the image cover the entire div */
   background-position: center; /* Centers the image */
   background-repeat:no-repeat;
@@ -763,7 +902,7 @@
             font-weight: bold;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             margin-bottom: 6px;
-            color: #ff4c4c;
+            color: #eb014f;
             text-align: center;
 
         }
@@ -1104,7 +1243,7 @@
             font-weight: 900;
             font-family: 'Press Start 2P', cursive;
             white-space: nowrap;
-            background: linear-gradient(to right, #cd0022, #312227);
+            background: linear-gradient(to right, #161616, #000000);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -1703,63 +1842,167 @@
                 font-size: 1rem;
             }
         }    /* --- MAIN CONTENT --- */
-    main {
-      flex: 1 0 auto;
-      padding: 100px 20px 60px; /* top padding to clear fixed header */
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
+  .gradient-text {
+      font-size: 48px;
+      font-weight: bold;
+      background: linear-gradient(90deg, #00ffe7, #ff00c8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .post-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.603);
-      display: flex;
-      flex-direction: column;
-      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-    }
+    @media (max-width: 600px) {
+      .gradient-text {
+        font-size: 32px;
+      }
+    }     /* Container for blogs */
+#homepage-blogs {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+}
 
-    body.dark .post-card {
-      background: #222;
-      box-shadow: 0 4px 15px rgb(255 255 255 / 0.08);
-      color: #eee;
-    }
+/* Each blog card */
+.blog-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+  padding: 25px 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
 
-    .post-card h2 {
-      margin-top: 0;
-      margin-bottom: 0.4rem;
-      color: #ff4500;
-      font-size: 1.4rem;
-      user-select: none;
-    }
+.blog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
 
-    .post-card small {
-      color: #777;
-      margin-bottom: 1rem;
-    }
+/* Blog title */
+.blog-card h3 {
+  margin: 0 0 10px 0;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #1a1a1a;
+  letter-spacing: 0.03em;
+}
 
-    body.dark .post-card small {
-      color: #bbb;
-    }
+/* Category and author line */
+.blog-card p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 15px;
+  font-style: italic;
+}
 
-    .post-video iframe {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      border: none;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-    }
+/* Blog image styling */
+.blog-card img {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+}
 
-    .post-body {
-      flex-grow: 1;
-      line-height: 1.45;
-      white-space: pre-wrap;
-    }
+/* Blog content */
+.blog-card > div:nth-child(4) {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 20px;
+  overflow-wrap: break-word;
+}
+
+/* Comments toggle button */
+.blog-card button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 30px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-right: 10px;
+  box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
+}
+
+.blog-card button:hover {
+  background: linear-gradient(135deg, #764ba2, #667eea);
+}
+
+/* Comments section */
+#homepage-blogs .comment {
+  border-top: 1px solid #eee;
+  padding: 12px 0 8px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Comments container */
+
+div[id^="comments-"] {
+  margin-top: 15px;
+  max-height: 250px;
+  overflow-y: auto;
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 15px 20px;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.03);
+}
+
+/* Comment input + post button container */
+.blog-card > div:last-child {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+/* Comment input field */
+.blog-card input[type="text"] {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border-radius: 25px;
+  border: 1.5px solid #ddd;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.blog-card input[type="text"]:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+}
+
+/* Post comment button */
+.blog-card > div:last-child button {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  border-radius: 25px;
+  background: #667eea;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 3px 12px rgba(102, 126, 234, 0.5);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.blog-card > div:last-child button:hover {
+  background: #5563c1;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .blog-card {
+    padding: 20px 15px;
+  }
+  .blog-card h3 {
+    font-size: 1.5rem;
+  }
+}
 
 #popup-notification {
   position: fixed;
@@ -1806,7 +2049,22 @@
 #popup-notification button#popup-close:focus {
   color: #ffbb99;
   outline: none;
+}.read-more-content {
+  display: none;
 }
+
+.read-more-button {
+  color: #007bff;
+  cursor: pointer;
+  user-select: none;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.read-more-button:hover {
+  text-decoration: underline;
+}
+
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -1847,14 +2105,14 @@
     <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <br>
-        <a href="#" onclick="toggleSidebar()"><i class="fas fa-user"></i> <b>Profile</b></a>
+        <a href="about.html" onclick="toggleSidebar()"><i class="fas fa-user"></i> <b>About</b></a>
          <a href="#" onclick="toggleSidebar()"><i class="fas fa-user-plus"></i> <b>Contact</b></a>
                   <a href="#" onclick="toggleSidebar()"><i class="fas fa-calendar-alt"></i> <b>Help/ Feedback!</b></a>
 
     </div>
     <header>
         <div class="logo">
-            <img src="backimg122.jpg"/>
+            <img src="logoimg.jpg"/>
             <b>Adil Zaidi Blogs</b>
         </div>
         <button class="icon-btn" id="openSearch" title="Open Search">
@@ -1878,22 +2136,20 @@
             <ul id="resultList"></ul>
         </div>
     </header>
-    <div class="nft-section">
-        <br>
-        <section class="welcome-section" aria-label="Welcome section">
-            <div class="ribbon" aria-hidden="true">Welcome</div>
-            <div class="welcome-content">
-                <h1>To Adil Zaidi Kavish Blogs</h1>
-                <p>Discover clean, modern, and insightful blog posts about technology, programming, and lifestyle. Stay
-                    updated and inspired!</p>
-                <a href="#latest-posts" class="btn-primary" role="button">Explore Latest Posts</a>
-            </div>
-            <div class="scalelines"></div>
-            <div class="retrobg"></div>
-        </section>
-
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome To<h1 class="gradient-text">Adil Zaidi Blogs!</h1></h1>
+      <a href="#" class="get-started-btn">Get Started <span>&#10140;</span></a>
+      <p>
+        I'm Adil Kavish Zaidi, a passionate soul who finds expression through words. Whether it's composing heartfelt
+        poetry or crafting thought-provoking blogs, I love connecting with people through stories and emotions.
+      </p>
     </div>
-   <br> <h1 class="glitch" data-text="Featured Books"> Featured Books</h1> <br>
+ </section> <br>
+   <div class="about-heading"><h1><b>Latest Blogs!</b></h1></div>
+  <div id="homepage-blogs" class="blog-list"></div>
+
+<br><br> <br> <div class="about-heading"><h1><b>Featured Books!</b></h1></div> <br>
 <div class="game-slider">
       <div class="game-card22">
         <span class="iconbadge22">Trending Post</span>
@@ -1913,12 +2169,6 @@
     </div>
   </div>
   <br> 
-  <br> <h1 class="glitch" data-text="Latest Blogs"> Latest Blogs</h1>
-
-  <main id="posts-container" tabindex="0" aria-live="polite" aria-label="Blog Posts">
-    <!-- Blog posts will load here -->
-  </main>
-<br>
   <div id="popup-notification" role="alert" aria-live="assertive" aria-atomic="true">
   <p>Welcome to Ichigo Official Blogs! Enjoy the latest posts.</p>
   <button aria-label="Close notification" id="popup-close">&times;</button>
@@ -1937,11 +2187,12 @@
 
     
 </div>
-<br> -->
+<br> --> <br>
+<br>
         <footer>
     <div>
-      <h4>Ichigo Official Blogs</h4>
-      <p>Your go-to place for the latest updates, tech insights, and blog tutorials. Stay tuned!</p>
+      <h4>Adil Zaidi Blogs!</h4>
+      <p>Your go-to place for awesome blogs and poetry. Stay tuned!</p>
     </div>
     <div>
       <h4>Subscribe</h4>
@@ -1978,63 +2229,152 @@
                 panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
             }
         </script>
-  <script>
-    // Firebase config
-    const firebaseConfig = {
-      apiKey: "AIzaSyCdeme0EVSoDmtKS2kjJb9lz_om82VxTSo",
-      authDomain: "bloging-1e7df.firebaseapp.com",
-      projectId: "bloging-1e7df",
-      storageBucket: "bloging-1e7df.appspot.com",
-      messagingSenderId: "177297831056",
-      appId: "1:177297831056:web:4cc414cdeb9e4ebe14d415"
-    };
+  <!-- Include Firebase scripts (same as your admin panel) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { 
+    getFirestore, collection, getDocs, doc, updateDoc, query, orderBy, addDoc 
+  } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+  const firebaseConfig = {
+    apiKey: "AIzaSyCdeme0EVSoDmtKS2kjJb9lz_om82VxTSo",
+    authDomain: "bloging-1e7df.firebaseapp.com",
+    projectId: "bloging-1e7df",
+    storageBucket: "bloging-1e7df.appspot.com",
+    messagingSenderId: "177297831056",
+    appId: "1:177297831056:web:4cc414cdeb9e4ebe14d415"
+  };
 
-    const container = document.getElementById('posts-container');
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-    function getYouTubeVideoID(url) {
-      if (!url) return null;
-      const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/;
-      const match = url.match(regex);
-      return match ? match[1] : null;
-    }
+  const blogsDiv = document.getElementById("homepage-blogs");
 
-    async function loadPosts() {
-      try {
-        const snapshot = await db.collection('posts').orderBy('date', 'desc').get();
-        if (snapshot.empty) {
-          container.innerHTML = '<p>No posts found.</p>';
-          return;
-        }
-        let html = '';
-        snapshot.forEach(doc => {
-          const post = doc.data();
-          let dateStr = post.date;
-          if (post.date?.toDate) {
-            dateStr = post.date.toDate().toLocaleDateString();
-          }
-          const videoID = getYouTubeVideoID(post.youtubeUrl);
-          html += `
-            <article class="post-card" tabindex="0">
-              <h2>${post.title}</h2>
-              <small>By ${post.author} • ${dateStr}</small>
-              ${videoID ? `<div class="post-video"><iframe src="https://www.youtube.com/embed/${videoID}" allowfullscreen loading="lazy" referrerpolicy="no-referrer"></iframe></div>` : ''}
-              <div class="post-body">${post.content}</div>
-            </article>
-          `;
+  // Load and display blogs with Read More feature
+  async function loadBlogs() {
+    const blogsRef = collection(db, "blogs");
+    const q = query(blogsRef, orderBy("date", "desc"));
+    const snapshot = await getDocs(q);
+
+    blogsDiv.innerHTML = "";
+
+    snapshot.forEach(async (docSnap) => {
+      const blog = docSnap.data();
+      const blogId = docSnap.id;
+
+      // Increase view count (simple approach)
+      const blogDocRef = doc(db, "blogs", blogId);
+      const newViews = (blog.views || 0) + 1;
+      updateDoc(blogDocRef, { views: newViews });
+
+      // Prepare Read More content by word count
+      const maxWords = 50;
+      const plainText = blog.content.replace(/<[^>]+>/g, '').trim(); // strip HTML tags
+      const words = plainText.split(/\s+/);
+      const isLong = words.length > maxWords;
+      const shortText = isLong ? words.slice(0, maxWords).join(' ') + "..." : plainText;
+
+      // Create blog card div
+      const div = document.createElement("div");
+      div.className = "blog-card";
+      div.style.border = "1px solid #ccc";
+      div.style.padding = "15px";
+      div.style.marginBottom = "20px";
+      div.style.borderRadius = "5px";
+      div.style.background = "#fff";
+
+      div.innerHTML = `
+        <h3>${blog.title}</h3>
+        <p><strong>${blog.category}</strong> | by ${blog.author} | Views: ${newViews}</p>
+        ${blog.imageUrl && blog.imageUrl !== "none" ? `<img src="${blog.imageUrl}" alt="${blog.title}" style="max-width:100%;height:auto; margin:10px 0;">` : ""}
+        <p>
+          <span class="short-text">${shortText}</span>
+          <span class="read-more-content" style="display:none;">${blog.content}</span>
+          ${isLong ? '<span class="read-more-button" style="color:#007bff; cursor:pointer; font-weight:bold; margin-left:5px;">Read More</span>' : ''}
+        </p>
+        <button onclick="toggleComments('${blogId}')">Show Comments</button>
+        <div id="comments-${blogId}" style="display:none; margin-top:10px; border-top:1px solid #eee; padding-top:10px;"></div>
+        <div style="margin-top:10px;">
+          <input type="text" id="commentInput-${blogId}" placeholder="Add comment..." style="width:80%;padding:5px;">
+          <button onclick="addComment('${blogId}')">Post</button>
+        </div>
+      `;
+
+      blogsDiv.appendChild(div);
+    });
+  }
+
+  // Toggle Comments Section
+  window.toggleComments = async function(blogId) {
+    const box = document.getElementById("comments-" + blogId);
+    if (box.style.display === "none") {
+      box.style.display = "block";
+      box.innerHTML = "<em>Loading comments...</em>";
+
+      const commentsRef = collection(db, "blogs", blogId, "comments");
+      const commentsSnap = await getDocs(commentsRef);
+
+      if (commentsSnap.empty) {
+        box.innerHTML = "<i>No comments yet.</i>";
+      } else {
+        box.innerHTML = "";
+        commentsSnap.forEach(doc => {
+          const c = doc.data();
+          const commentDiv = document.createElement("div");
+          commentDiv.style.borderTop = "1px solid #ccc";
+          commentDiv.style.padding = "5px 0";
+          commentDiv.innerHTML = `<strong>${c.user || "Anonymous"}</strong> (${new Date(c.date).toLocaleString()}):<br>${c.text}`;
+          box.appendChild(commentDiv);
         });
-        container.innerHTML = html;
-      } catch (err) {
-        console.error("Failed to load posts", err);
-        container.innerHTML = "<p>Failed to load posts. Please try again later.</p>";
+      }
+    } else {
+      box.style.display = "none";
+    }
+  }
+
+  // Add Comment Function
+  window.addComment = async function(blogId) {
+    const input = document.getElementById("commentInput-" + blogId);
+    const text = input.value.trim();
+    if (!text) return alert("Comment cannot be empty.");
+
+    await addDoc(collection(db, "blogs", blogId, "comments"), {
+      user: "Anonymous",
+      text,
+      date: new Date().toISOString()
+    });
+
+    input.value = "";
+    toggleComments(blogId);  // Close comments
+    toggleComments(blogId);  // Reopen comments (refresh)
+  }
+
+  // Read More / Read Less toggle event delegation
+  blogsDiv.addEventListener("click", function(event) {
+    if (event.target.classList.contains("read-more-button")) {
+      const btn = event.target;
+      const p = btn.parentElement;
+      const shortText = p.querySelector(".short-text");
+      const fullContent = p.querySelector(".read-more-content");
+
+      if (btn.textContent === "Read More") {
+        shortText.style.display = "none";
+        fullContent.style.display = "inline";
+        btn.textContent = "Read Less";
+      } else {
+        shortText.style.display = "inline";
+        fullContent.style.display = "none";
+        btn.textContent = "Read More";
       }
     }
+  });
 
-    loadPosts();
-  </script>  <script>
+  // Initial load
+  loadBlogs();
+</script>
+
+
+ <script>
             const keywordPages = {
                 "tournaments": "tournaments.html",
                 "games": "games.html",

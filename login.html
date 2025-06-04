@@ -2,138 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sign In - Vibrant Blog</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <title>Admin Panel - Add Products</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
-    body {
-      height: 100vh;
-      background: #f9fafb;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #111;
-      padding: 1rem;
-    }
-    .card {
-      background: white;
-      padding: 3rem 2rem;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
-      position: relative;
-    }
-    .card h2 {
-      margin-bottom: 1rem;
-      font-weight: 600;
-      font-size: 1.8rem;
-      color: #222;
-    }
-    .card p {
-      color: #555;
-      font-size: 0.95rem;
-      margin-bottom: 2rem;
-    }
-    .google-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      background: #fff;
-      color: #444;
-      border: 1.5px solid #ddd;
-      padding: 0.75rem 1rem;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
-      width: 100%;
-      box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
-    }
-    .google-btn:hover {
-      background: #f5f5f5;
-      border-color: #bbb;
-    }
-    .google-icon {
-      width: 20px;
-    }
-    .error-message {
-      color: #e74c3c;
-      font-weight: 500;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      min-height: 1.2em;
-    }
-    footer {
-      position: fixed;
-      bottom: 16px;
-      color: #888;
-      font-size: 0.8rem;
-      width: 100%;
-      text-align: center;
-      user-select: none;
-    }
+    body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+    .form-container { background: white; padding: 20px; border-radius: 8px; max-width: 500px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    input, textarea { width: 100%; margin-bottom: 10px; padding: 10px; }
+    button { padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; }
+    button:hover { background: #218838; }
+    h2 { text-align: center; }
   </style>
-
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 </head>
 <body>
 
-  <div class="card">
-    <h2>Welcome Back</h2>
-    <p>Sign in with your Google account to continue to Vibrant Blog.</p>
-    <button class="google-btn" id="loginBtn">
-      <img class="google-icon" src="google-icon-1.png" alt="Google Logo" />
-      Sign in with Google
-    </button>
-    <div class="error-message" id="errorMsg"></div>
+  <div class="form-container">
+    <h2>Add New Product</h2>
+    <input type="text" id="title" placeholder="Product Title" />
+    <textarea id="description" placeholder="Product Description"></textarea>
+    <input type="number" id="price" placeholder="Price" />
+    <input type="number" id="rating" placeholder="Rating (0–5)" />
+    <input type="text" id="image" placeholder="Image URL" />
+    <button onclick="addProduct()">Upload Product</button>
   </div>
-
-  <footer>
-    © 2025 Vibrant Blog. All rights reserved.
-  </footer>
 
   <script>
     const firebaseConfig = {
-      apiKey: "AIzaSyCdeme0EVSoDmtKS2kjJb9lz_om82VxTSo",
-      authDomain: "bloging-1e7df.firebaseapp.com",
-      projectId: "bloging-1e7df",
-      storageBucket: "bloging-1e7df.appspot.com",
-      messagingSenderId: "177297831056",
-      appId: "1:177297831056:web:4cc414cdeb9e4ebe14d415"
+      apiKey: "AIzaSyBnDGSg_K60_Tp7w13c-O8Jb9hLkErSCY8",
+      authDomain: "gamexd-110.firebaseapp.com",
+      projectId: "gamexd-110",
+      storageBucket: "gamexd-110.appspot.com",
+      messagingSenderId: "501792431454",
+      appId: "1:501792431454:web:10024d189316ef9e2303cf"
     };
 
     firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-    const loginBtn = document.getElementById('loginBtn');
-    const errorMsg = document.getElementById('errorMsg');
+    function addProduct() {
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+      const price = document.getElementById('price').value;
+      const rating = document.getElementById('rating').value;
+      const image = document.getElementById('image').value;
 
-    loginBtn.addEventListener('click', () => {
-      errorMsg.textContent = ''; // Clear previous errors
+      if (!title || !price || !image) {
+        alert("Title, Price and Image are required!");
+        return;
+      }
 
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider)
-        .then(result => {
-          window.location.href = "index.html"; // Change as needed
-        })
-        .catch(error => {
-          console.error("Login error:", error);
-          errorMsg.textContent = "Login failed: " + error.message;
-        });
-    });
+      db.collection("products").add({
+        title,
+        description,
+        price,
+        rating,
+        image,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        alert("Product added successfully!");
+        document.querySelectorAll('input, textarea').forEach(input => input.value = '');
+      }).catch(err => {
+        console.error("Error adding product: ", err);
+        alert("Failed to add product.");
+      });
+    }
   </script>
-
 </body>
 </html>

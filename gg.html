@@ -1,201 +1,2444 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Blog Posts</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      background-color: #1a1a1a;
-      color: #fff;
-      overflow-x: hidden;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameXD - The Game Sale Show</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
-    header {
-      background: linear-gradient(135deg, #ff3300, #cc0000);
-      padding: 1.5rem 1rem;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    }
+        body {
+           background-color: black;
+            color: black;
+        }
 
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-    }
+        @media (max-width: 600px) {
+            .search-container input {
+                display: block;
+                width: 100%;
+            }
+        }
 
-    main {
-      padding: 2rem;
-    }
+        .mario-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            height: 50px;
+        }
 
-    .post {
-      background: #292929;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-      margin: 1rem 0;
-      padding: 1.5rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 0.6s forwards;
-    }
+        .mario {
+            position: absolute;
+            height: auto;
+            width: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: run-across 10s linear infinite;
+        }
 
-    .post:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 20px rgba(255, 51, 0, 0.4);
-    }
+        @keyframes run-across {
+            0% {
+                left: -60px;
+            }
 
-    .post h2 {
-      margin-top: 0;
-      font-size: 1.8rem;
-      color: #ff4d4d;
-    }
+            100% {
+                left: calc(100% + 60px);
+                /* Move across container */
+            }
+        }
 
-    .post p {
-      font-size: 1rem;
-      line-height: 1.6;
-    }
 
-    .post iframe {
-      max-width: 100%;
-      border: none;
-      margin-top: 1rem;
-      border-radius: 8px;
-    }
+        @keyframes run {
+            0% {
+                left: -200px;
+                /* Mario starts off-screen */
+            }
 
-    .top-trending-box {
-      background-color: #222;
-      border-left: 5px solid #ff3300;
-      padding: 1rem;
-      margin-top: 2rem;
-      animation: fadeInUp 1s ease forwards;
-    }
+            50% {
+                left: 50%;
+                /* Mario reaches the middle of the screen */
+                transform: translateY(-50%) translateX(-50%);
+            }
 
-    .footer-subscribe {
-      margin-top: 3rem;
+            100% {
+                left: 100%;
+                /* Mario runs off the screen */
+            }
+        }
+
+        header {
+            /* background: rgb(32, 32, 32);\ */
+        background: linear-gradient( rgb(39, 39, 39),#000);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 12px black;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(90deg, #ff005d, #d3d1d2, #ff0040, #958a91);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            font-weight: 900;
+            font-family: fantasy;
+            animation: shimmer 5s linear infinite;
+        }
+
+        .logo img {
+            height: 35px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes floatDragon {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            background: #000;
+            border-radius: 2px;
+        }
+
+       
+    .hero {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 30, 0.3)),
+        url('bg.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
       display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
+      align-items: center;
+      padding: 120px 60px 40px;
     }
 
-    .footer-subscribe input[type="email"] {
-      padding: 0.7rem 1rem;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      background-color: #333;
+    .hero-content {
+      max-width: 600px;
+      animation: fadeInUp 2s ease forwards;
+    }
+
+    .hero-content h1 {
+      font-size: 48px;
       color: white;
-      transition: box-shadow 0.3s ease;
+      font-weight: 800;
+      margin-bottom: 30px;
     }
 
-    .footer-subscribe input[type="email"]:focus {
-      box-shadow: 0 0 10px rgba(255, 51, 0, 0.5);
-      outline: none;
+    .get-started-btn {
+      display: inline-block;
+      background: white;
+      color: black;
+      padding: 12px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-bottom: 30px;
+      transition: 0.3s;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+      animation-delay: 2.5s;
     }
 
-    .footer-subscribe button {
-      padding: 0.7rem 1.5rem;
-      background: #ff3300;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: transform 0.3s ease;
+    .get-started-btn span {
+      margin-left: 10px;
     }
 
-    .footer-subscribe button:hover {
-      transform: scale(1.05);
+    .get-started-btn:hover {
+      background: #ddd;
     }
 
-    @keyframes fadeInUp {
-      0% {
+    .hero-content p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgb(255, 255, 255);
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+      animation-delay: 2.8s;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(10px);
       }
-      100% {
+
+      to {
         opacity: 1;
         transform: translateY(0);
       }
     }
 
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 1.8rem;
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
       }
 
-      .post h2 {
-        font-size: 1.5rem;
-      }
-
-      .post p {
-        font-size: 0.95rem;
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
-  </style>
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Apply updated shorter durations */
+   
+
+    .contact-btn {
+      animation: fadeIn 0.5s ease forwards;
+      animation-delay: 1s;
+    }
+
+    .hero-content {
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .get-started-btn {
+      animation: fadeIn 0.5s ease forwards;
+      animation-delay: 1.2s;
+    }
+
+    .hero-content p {
+      animation: fadeIn 0.5s ease forwards;
+      animation-delay: 1.3s;
+    }
+
+
+    @media (max-width: 1024px) {
+    
+ 
+
+      .hero {
+        padding: 120px 30px 40px;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .hero-content h1 {
+        font-size: 36px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        height: auto;
+        padding: 140px 20px 60px;
+      }
+
+      .hero-content h1 {
+        font-size: 28px;
+      }
+
+      .get-started-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+
+      .hero-content p {
+        font-size: 14px;
+      }
+
+      .contact-btn {
+        margin: 10px 0;
+      }
+    }
+
+        .characters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .characters img {
+            width: 200px;
+            height: auto;
+            text-align: center;
+            align-items: center;
+        }
+
+
+        .latest-label {
+            margin: 1rem;
+            background: #22c55e;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1rem;
+            border-radius: 8px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+
+        .gamepad-illustration {
+            display: flex;
+            justify-content: flex-end;
+            margin-right: 1rem;
+            margin-top: -1rem;
+        }
+
+        .gamepad-illustration img {
+            width: 120px;
+        }
+
+        .latest-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .latest-container .latest-label {
+            margin: 0;
+        }
+
+        .latest-container .gamepad-illustration {
+            margin: 0;
+        }
+
+        .latest-container .gamepad-illustration img {
+            width: 100px;
+            height: auto;
+        }
+
+        .sidebar {
+
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 200px;
+            height: 100%;
+            background: linear-gradient(#090909, #010101d2, #010101cb, #00000084, #ff002f72);
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+
+
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar .close-btn {
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            text-align: right;
+        }
+
+        .sidebar a {
+            display: block;
+            background: linear-gradient(90deg, #e4d2d2, #858282, rgb(255, 255, 254), rgb(181, 114, 114));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            font-weight: 900;
+            font-family: fantasy;
+            animation: shimmer 5s linear infinite;
+            text-decoration: none;
+            padding: 0.8rem 0;
+        }
+
+        .sidebar a:hover {
+            background-color: #ff0000;
+        }
+
+
+
+        .overlay.show {
+            display: block;
+        }
+
+        /* Hamburger lines color fix */
+        .hamburger span {
+            background: #fff;
+        }
+
+        /* Optional: Push content when sidebar opens */
+
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin-bottom: 20px;
+            color: #292929;
+        }
+
+        .tournament-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        /* Base styles */
+        .tournament-card {
+            width: 90%;
+            /* Makes the card responsive based on the screen size */
+            max-width: 400px;
+            /* Maximum width for large screens */
+            min-width: 250px;
+            /* Minimum width for very small screens */
+            margin: 20px auto;
+            /* Centers the card with spacing */
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+            /* Optional hover effect */
+            cursor: pointer;
+        }
+
+        /* For large screens (PC/laptop) */
+        @media (min-width: 1024px) {
+            .tournament-card {
+                width: 40vw;
+                /* 40% of the viewport width for larger screens */
+                max-width: 500px;
+                /* Limits the size to a maximum on very large screens */
+            }
+        }
+
+        /* For mobile screens */
+        @media (max-width: 767px) {
+            .tournament-card {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+
+        .tournament-card:hover {
+            transform: scale(1.02);
+        }
+
+        .tournament-image {
+            position: relative;
+        }
+
+        .tournament-image img {
+            width: 100%;
+            display: block;
+        }
+
+        .badge {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(to right, #ff007b, #ffd500);
+            color: #ffffff;
+            padding: 4px 12px;
+            font-weight: bold;
+            font-size: 12px;
+            border-top-left-radius: 10px;
+        }
+
+        .tournament-content {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+
+        .game-label {
+            font-size: 12px;
+            color: #5c5c5c;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .tournament-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: rgb(23, 23, 23);
+            margin-bottom: 10px;
+        }
+
+        .calendar {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: rgb(43, 43, 43);
+            margin-bottom: 10px;
+        }
+
+        .calendar::before {
+            content: "📅";
+            margin-right: 6px;
+        }
+
+        .organizer {
+            background: rgb(28, 28, 28);
+            border-radius: 10px;
+            padding: 10px;
+            color: rgb(255, 255, 255);
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .register-btn {
+            background: linear-gradient(to bottom right, #00d5ff, #ff0044);
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .register-btn:hover {
+            background: #ffa200;
+        }
+
+        .membership-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+        }
+
+        .membership-offer {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-weight: 900;
+            font-family: 'Press Start 2P', cursive;
+            white-space: nowrap;
+            background: linear-gradient(to right, #ffffff, #ff005d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            text-shadow: none;
+            text-align: center;
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        .mcheading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+        }
+
+        .mcheadingtitle {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-weight: 900;
+            font-family: 'Press Start 2P', cursive;
+            white-space: nowrap;
+            background: linear-gradient(to right, #cd0022, #312227);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            text-shadow: none;
+            text-align: center;
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        #loginBtn {
+            color: white;
+            background: linear-gradient(to right, #ff003c, #8c00ff);
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
+
+        #logoutBtn {
+            color: rgb(33, 33, 33);
+            background-color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: end;
+            padding: 4px 8px;
+            cursor: pointer;
+        }
+
+        #userEmail {
+            display: none;
+        }
+
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .characters img {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .sidebar a i {
+            margin-right: 8px;
+        }
+
+        .sidebar {
+            z-index: 1000;
+        }
+
+        .characters {
+            position: relative;
+            z-index: 1;
+        }
+
+        body.sidebar-open .characters img {
+            animation-play-state: paused;
+        }
+
+        .rasengan {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at center, #00f0ff, #0078ff, #1f0033);
+            border-radius: 50%;
+            box-shadow: 0 0 30px #00c3ff, 0 0 30px #9400d8, 0 0 60px #1e00ff;
+            animation: pulse 2s infinite;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .rasengan {
+            animation: pulse 2s infinite, spin 4s linear infinite;
+        }
+
+        .rasengan-container {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 20px;
+            height: 20px;
+            animation: float 2s ease-in-out infinite;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .notification-panel {
+            position: fixed;
+            bottom: 90px;
+            right: 30px;
+            background-color: #121212;
+            color: white;
+            border: 2px solid #ff00c8;
+            border-radius: 16px;
+            padding: 20px;
+            width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0 0 20px rgba(255, 0, 200, 0.4);
+            display: none;
+            z-index: 1001;
+        }
+
+        .notification-panel h3 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            border-bottom: 1px dashed #888;
+            padding-bottom: 5px;
+        }
+
+        .notification-panel ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .notification-panel ul li {
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+
+        .marquee {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .marquee::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 100%;
+            background: none;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll-left 15s linear infinite;
+        }
+
+        .marquee span {
+            font-size: 18px;
+            padding-right: 4rem;
+            background: linear-gradient(90deg, #ff0073, #050505, #272727, #353535);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 5s linear infinite;
+            font-family: 'Press Start 2P', cursive;
+
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0%);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+
+
+        .nft-section {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgb(255, 255, 255);
+             background-image: url('bg.jpg');
+  background-size: cover;      /* Makes the image cover the entire div */
+  background-position: center; /* Centers the image */
+  background-repeat:no-repeat;
+        }
+
+        .nft-section h2 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .nft-section p {
+            color: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        .nft-frame-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .nft-frame {
+            flex: 1 1 auto;
+            max-width: 120px;
+            height: 220px;
+            animation: float 3s ease-in-out infinite;
+            clip-path: polygon(20% 0, 80% 0, 100% 100%, 0% 100%);
+            overflow: hidden;
+            border: 3px solid rgb(255, 0, 72);
+            transition: transform 0.3s;
+        }
+
+        .nft-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .nft-frame.center {
+            max-width: 160px;
+            height: 250px;
+            clip-path: polygon(15% 0, 85% 0, 100% 100%, 0% 100%);
+        }
+
+
+        /* 🔻 Responsive behavior: Resize frames */
+        @media (max-width: 768px) {
+            .nft-frame {
+                max-width: 80px;
+                height: 150px;
+            }
+
+            .nft-frame.center {
+                max-width: 110px;
+                height: 170px;
+            }
+
+            /* 🔻 Hide the 4th and 5th NFTs */
+            .nft-frame.hide-mobile {
+                display: none;
+            }
+
+            .nft-section h2 {
+                font-size: 1.5em;
+            }
+
+            .nft-section p {
+                font-size: 0.9em;
+            }
+
+        }
+
+        .bgblack {
+            background-color: black;
+            margin: 0px;
+        }
+
+        /* about */
+        .about-section {
+            padding: 30px 10px;
+            color: rgb(17, 17, 17);
+            text-align: center;
+        }
+
+        .about-heading {
+            font-size: 2.5em;
+            font-weight: bold;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin-bottom: 6px;
+            color: #eb014f;
+            text-align: center;
+
+        }
+
+        .about-description {
+            max-width: 500px;
+            margin: 0 auto;
+            color: #ffffff;
+            font-size: 1.1em;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Animated text effect */
+        @keyframes shineText {
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .about-heading {
+                font-size: 2em;
+            }
+
+            .about-description {
+                font-size: 1em;
+                padding: 0 10px;
+            }
+        }
+
+        .rasengan-notification {
+            position: fixed;
+            bottom: 180px;
+            right: 30px;
+            background: #0e0e0e;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 136, 255, 0.6);
+            z-index: 1000;
+            width: 280px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 20px;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+        }
+
+         /* --- FOOTER --- */
+    footer {
+      flex-shrink: 0;
+      background: linear-gradient(to right, #ff6a65,#ff0000 );
+      color: white;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0px;
+      justify-content: space-around;
+      gap: 2rem;
+      font-size: 0.95rem;
+    }
+
+    footer>div {
+      flex: 1 1 280px;
+      max-width: 320px;
+    }
+
+    footer h4 {
+      margin-top: 0;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      user-select: none;
+    }
+
+    footer p {
+      line-height: 1.5;
+      user-select: text;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 1.3rem;
+      font-size: 1.5rem;
+    }
+
+    .social-icons a {
+      color: white;
+      transition: color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      color: #ffbb99;
+    }
+
+    .subscribe-form {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+    }
+
+    .subscribe-form input[type="email"] {
+      flex-grow: 1;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+      outline-offset: 2px;
+    }
+
+    .subscribe-form button {
+      background: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5rem 1.2rem;
+      font-weight: 700;
+      color: #ff4500;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .subscribe-form button:hover {
+      background: #ff4500;
+      color: white;
+    }
+
+        /* Retro Grid Background */
+        .retrobg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.093) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        /* Scanline Flicker */
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: repeating-linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0.921) 0px,
+                    rgb(0, 0, 0) 1px,
+                    transparent 2px,
+                    transparent 4px);
+            z-index: 1;
+            animation: flicker 0.15s infinite;
+        }
+
+        /* Retro Particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgb(22, 22, 22);
+            opacity: 0.6;
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+        }
+
+        /* Generate 25 particles with random positions and delays */
+        .particle:nth-child(1) {
+            left: 10%;
+            animation-duration: 6s;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            left: 20%;
+            animation-duration: 8s;
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(3) {
+            left: 30%;
+            animation-duration: 5s;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(4) {
+            left: 40%;
+            animation-duration: 7s;
+            animation-delay: 3s;
+        }
+
+        .particle:nth-child(5) {
+            left: 50%;
+            animation-duration: 6s;
+            animation-delay: 4s;
+        }
+
+        .particle:nth-child(6) {
+            left: 60%;
+            animation-duration: 9s;
+            animation-delay: 5s;
+        }
+
+        .particle:nth-child(7) {
+            left: 70%;
+            animation-duration: 6s;
+            animation-delay: 6s;
+        }
+
+        .particle:nth-child(8) {
+            left: 80%;
+            animation-duration: 8s;
+            animation-delay: 7s;
+        }
+
+        .particle:nth-child(9) {
+            left: 90%;
+            animation-duration: 10s;
+            animation-delay: 8s;
+        }
+
+        .particle:nth-child(10) {
+            left: 15%;
+            animation-duration: 7s;
+            animation-delay: 9s;
+        }
+
+        .particle:nth-child(11) {
+            left: 25%;
+            animation-duration: 6s;
+            animation-delay: 10s;
+        }
+
+        .particle:nth-child(12) {
+            left: 35%;
+            animation-duration: 9s;
+            animation-delay: 11s;
+        }
+
+        .particle:nth-child(13) {
+            left: 45%;
+            animation-duration: 7s;
+            animation-delay: 12s;
+        }
+
+        .particle:nth-child(14) {
+            left: 55%;
+            animation-duration: 5s;
+            animation-delay: 13s;
+        }
+
+        .particle:nth-child(15) {
+            left: 65%;
+            animation-duration: 8s;
+            animation-delay: 14s;
+        }
+
+        @keyframes floatUp {
+            0% {
+                bottom: -10px;
+                opacity: 0;
+                transform: translateX(0) scale(0.8);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: translateX(2px) scale(1);
+            }
+
+            100% {
+                bottom: 110%;
+                opacity: 0;
+                transform: translateX(-2px) scale(0.5);
+            }
+        }
+
+        @keyframes flicker {
+
+            0%,
+            100% {
+                opacity: 0.1;
+            }
+
+            50% {
+                opacity: 0.2;
+            }
+        }
+
+        @keyframes gridMove {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 100px 100px;
+            }
+        }
+
+        .mcheading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+        }
+
+        .mcheadingtitle {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-weight: 900;
+            font-family: 'Press Start 2P', cursive;
+            white-space: nowrap;
+            background: linear-gradient(to right, #161616, #000000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            text-shadow: none;
+            text-align: center;
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        /* Glitch Text */
+        .glitch {
+            text-align: center;
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-weight: 900;
+            color: rgb(23, 23, 23);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            width: 100%;
+        }
+
+        .glitch::before {
+            color: rgb(255, 0, 81);
+            z-index: -1;
+            transform: translate(-2px, 0);
+            animation: glitchRed 2s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            color: rgb(0, 255, 128);
+            z-index: -1;
+            transform: translate(2px, 0);
+            animation: glitchBlue 2s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitchRed {
+            0% {
+                clip: rect(0, 9999px, 0, 0);
+            }
+
+            10% {
+                clip: rect(0, 9999px, 100%, 0);
+                transform: translate(-2px, -2px);
+            }
+
+            20% {
+                clip: rect(0, 9999px, 30px, 0);
+                transform: translate(-3px, 2px);
+            }
+
+            30% {
+                clip: rect(10px, 9999px, 70px, 0);
+                transform: translate(-1px, -1px);
+            }
+
+            100% {
+                clip: rect(0, 9999px, 0, 0);
+                transform: translate(-2px, 0);
+            }
+        }
+
+        @keyframes glitchBlue {
+            0% {
+                clip: rect(0, 9999px, 0, 0);
+            }
+
+            10% {
+                clip: rect(40px, 9999px, 90px, 0);
+                transform: translate(3px, -2px);
+            }
+
+            20% {
+                clip: rect(10px, 9999px, 50px, 0);
+                transform: translate(1px, 1px);
+            }
+
+            30% {
+                clip: rect(0, 9999px, 30px, 0);
+                transform: translate(2px, -1px);
+            }
+
+            100% {
+                clip: rect(0, 9999px, 0, 0);
+                transform: translate(2px, 0);
+            }
+        }
+
+        .glitch:hover {
+            color: white;
+            text-shadow:
+                -2px 0 rgb(0, 0, 0),
+                2px 0 rgb(0, 0, 0);
+        }
+
+
+        .product-list-wrapper {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border-radius: 10px;
+            width: 280px;
+            overflow: hidden;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #e63946;
+            color: white;
+            padding: 5px 10px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            margin: 15px 0 5px;
+            font-weight: bold;
+        }
+
+        .product-price {
+            color: #ff0051;
+            font-size: 16px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 2px rgb(255, 0, 85);
+            font-weight: bold;
+        }
+
+        .product-rating {
+            margin-top: 8px;
+            color: gold;
+        }
+
+        /* Responsive Grid Layout */
+        @media (max-width: 1200px) {
+            .product-card {
+                width: 240px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .product-card {
+                width: 220px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-card {
+                width: 180px;
+            }
+
+            .product-title {
+                font-size: 16px;
+            }
+
+            .product-price {
+                font-size: 14px;
+            }
+
+            .product-rating {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-card {
+                width: 150px;
+            }
+
+            .product-title {
+                font-size: 14px;
+            }
+
+            .product-price {
+                font-size: 12px;
+            }
+
+
+            .product-rating {
+                font-size: 12px;
+            }
+        }
+
+        .intro-video {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        video {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            aspect-ratio: 16 / 9;
+        }
+
+        @media (max-width: 768px) {
+            .intro-video video {
+                width: 100vw;
+                height: auto;
+            }
+        }
+
+        /* Popup Overlay */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        /* Popup Box */
+        .popup-box {
+            background: #fff;
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-align: center;
+            width: 90%;
+            max-width: 350px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: popup 0.3s ease;
+        }
+
+        @keyframes popup {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .popup-icons img {
+            width: 40px;
+            margin: 10px;
+        }
+
+        .popup-success-icon img {
+            width: 50px;
+            margin-bottom: 10px;
+        }
+
+        .popup-options {
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .popup-options label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        /* Buttons */
+        .btn-yes,
+        .btn-ok {
+            background: linear-gradient(to right, #fee81e, #fa0d4c);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 16px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .btn-later {
+            background: #eee;
+            color: #333;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 16px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        /* Common icon button styling */
+        .icon-btn {
+            position: fixed;
+            top: 20px;
+            font-size: 26px;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+            transition: transform 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            transform: scale(1.1);
+        }
+
+        #openSearch,
+        #closeSearch {
+            right: 60px;
+            /* move away from hamburger */
+        }
+
+        #menuToggle {
+            right: 20px;
+            /* hamburger on far right */
+        }
+
+        .hide {
+            display: none;
+        }
+
+        /* Search Overlay */
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 80px;
+            box-sizing: border-box;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .search-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #searchBar {
+            width: 90%;
+            max-width: 500px;
+            padding: 14px 16px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        #resultList {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        #resultList li {
+            background: #1e1e1e;
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: left;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+
+        #resultList li:hover {
+            background: #333;
+        }
+
+
+
+        .game-slider-container {
+            text-align: center;
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+        }
+
+        .game-slider {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+            gap: 1rem;
+            scroll-snap-type: x mandatory;
+            padding: 1rem 0;
+            -webkit-overflow-scrolling: touch;
+            scroll-padding: 0 1rem;
+        }
+
+        .game-card22 {
+            flex: 0 0 auto;
+            width: 240px;
+            height: 320px;
+            background: #222;
+            border-radius: 12px;
+            overflow: hidden;
+            scroll-snap-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .game-slider {
+                padding: 0 1rem;
+                justify-content: flex-start;
+            }
+
+            .game-card22 {
+                width: 180px;
+                height: 240px;
+                scroll-snap-align: center;
+            }
+        }
+
+        .game-card22 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .game-card22:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .iconbadge22 {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(to right, #ff0084, #ff0015);
+            color: #ffffff;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+
+        @media (max-width: 768px) {
+            .game-card22 {
+                width: 180px;
+                height: 240px;
+            }
+        }
+
+        .badgetexticon {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border: 1.8px solid rgba(0, 0, 0, 0.471);
+            border-radius: 999px;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: rgb(22, 22, 22);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .badgtext {
+            font-size: 16px;
+        }
+
+        /* --- Welcome Section --- */
+        .welcome-section {
+            max-width: 900px;
+            margin: 120px auto 3rem;
+            padding: 1.5rem 2rem 2.5rem;
+            background: linear-gradient(to right, #ff6a65, #ff0000);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(255, 62, 0, 0.35);
+            position: relative;
+            text-align: center;
+            user-select: none;
+        }
+
+        .ribbon {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-5deg);
+            background: #ffffff;
+            color: #ff3e00;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 0.35rem 2.5rem;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+            letter-spacing: 1.2px;
+            user-select: none;
+            z-index: 10;
+        }
+
+        .welcome-content h1 {
+            font-size: 2.6rem;
+            margin: 0 0 0.5rem;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .welcome-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.8rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: #ff6600;
+            padding: 0.75rem 2.25rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            box-shadow: 0 6px 12px rgba(255, 62, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            user-select: none;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background-color: #ff261f;
+            color: white;
+            outline: none;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 600px) {
+            .welcome-section {
+                padding: 1rem 1.5rem 2rem;
+            }
+
+            .welcome-content h1 {
+                font-size: 1.9rem;
+            }
+
+            .welcome-content p {
+                font-size: 1rem;
+            }
+
+            .btn-primary {
+                padding: 0.6rem 1.8rem;
+                font-size: 1rem;
+            }
+        }    /* --- MAIN CONTENT --- */
+  .gradient-text {
+      font-size: 48px;
+      font-weight: bold;
+      background: linear-gradient(90deg, #00ffe7, #ff00c8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    @media (max-width: 600px) {
+      .gradient-text {
+        font-size: 32px;
+      }
+    }     /* Container for blogs */
+#homepage-blogs {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+}
+
+/* Each blog card */
+.blog-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+  padding: 25px 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+
+.blog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+/* Blog title */
+.blog-card h3 {
+  margin: 0 0 10px 0;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #1a1a1a;
+  letter-spacing: 0.03em;
+}
+
+/* Category and author line */
+.blog-card p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+/* Blog image styling */
+.blog-card img {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+}
+
+/* Blog content */
+.blog-card > div:nth-child(4) {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 20px;
+  overflow-wrap: break-word;
+}
+
+/* Comments toggle button */
+.blog-card button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 30px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-right: 10px;
+  box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
+}
+
+.blog-card button:hover {
+  background: linear-gradient(135deg, #764ba2, #667eea);
+}
+
+/* Comments section */
+#homepage-blogs .comment {
+  border-top: 1px solid #eee;
+  padding: 12px 0 8px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Comments container */
+
+div[id^="comments-"] {
+  margin-top: 15px;
+  max-height: 250px;
+  overflow-y: auto;
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 15px 20px;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.03);
+}
+
+/* Comment input + post button container */
+.blog-card > div:last-child {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+/* Comment input field */
+.blog-card input[type="text"] {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border-radius: 25px;
+  border: 1.5px solid #ddd;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.blog-card input[type="text"]:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+}
+
+/* Post comment button */
+.blog-card > div:last-child button {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  border-radius: 25px;
+  background: #667eea;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 3px 12px rgba(102, 126, 234, 0.5);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.blog-card > div:last-child button:hover {
+  background: #5563c1;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .blog-card {
+    padding: 20px 15px;
+  }
+  .blog-card h3 {
+    font-size: 1.5rem;
+  }
+}
+
+#popup-notification {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  max-width: 320px;
+  background: #ff5722;  /* Matches your header orange */
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(255, 87, 34, 0.4);
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 1500;
+}
+
+#popup-notification.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+#popup-notification button#popup-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 0.3rem 0 0.6rem;
+  user-select: none;
+  transition: color 0.25s ease;
+}
+
+#popup-notification button#popup-close:hover,
+#popup-notification button#popup-close:focus {
+  color: #ffbb99;
+  outline: none;
+}
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
-<body>
-  <header>
-    <h1>My Blog</h1>
-  </header>
-  <main>
-    <div id="postsContainer">⏳ Loading posts...</div>
-
-    <div class="top-trending-box">
-      <h3>🔥 Top Trending</h3>
-      <p>Discover the latest posts on gaming, tech, anime, and more!</p>
-    </div>
-
-    <div class="footer-subscribe">
-      <input type="email" placeholder="Enter your email for updates" />
-      <button>Subscribe</button>
-    </div>
-  </main>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      getDocs,
-    } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDPiqlFtuXZtggQoNHFK6p9Py7UOl77ytQ",
-      authDomain: "gamexd-d6fef.firebaseapp.com",
-      projectId: "gamexd-d6fef",
-      storageBucket: "gamexd-d6fef.appspot.com",
-      messagingSenderId: "50518442447",
-      appId: "1:50518442447:web:024df1a195189017d1e5f5",
-      measurementId: "G-WW2DW3REJ1"
+<script>
+    // JavaScript to handle the transition
+    window.onload = () => {
+        // Wait for the page to load fully, then trigger the transition
+        setTimeout(() => {
+            document.querySelector('.preload-screen').style.display = 'none'; // Hide the preload screen
+            document.querySelector('.content').style.display = 'block'; // Show the content
+        }, 2000); // Duration of the animation (2 seconds)
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+</script>
 
-    async function loadPosts() {
-      const postsContainer = document.getElementById("postsContainer");
-      postsContainer.innerHTML = "";
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const closeBtn = document.querySelector(".close-btn");
+        const notification = document.querySelector(".rasengan-notification");
 
-      const querySnapshot = await getDocs(collection(db, "blogs"));
-      querySnapshot.forEach((doc, index) => {
-        const post = doc.data();
-        const postEl = document.createElement("div");
-        postEl.className = "post";
-        postEl.style.animationDelay = `${index * 0.1}s`;
+        if (closeBtn && notification) {
+            closeBtn.addEventListener("click", () => {
+                notification.style.display = "none";
+            });
+        }
+    });
+</script>
+<!-- Firebase App (core) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 
-        postEl.innerHTML = `
-          <h2>${post.title}</h2>
-          <p>${post.content}</p>
-          ${post.youtubeLink ? `<iframe width="100%" height="315" src="${post.youtubeLink}" frameborder="0" allowfullscreen></iframe>` : ""}
-        `;
-        postsContainer.appendChild(postEl);
-      });
+<body>
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <br>
+        <a href="about.html" onclick="toggleSidebar()"><i class="fas fa-user"></i> <b>About</b></a>
+         <a href="#" onclick="toggleSidebar()"><i class="fas fa-user-plus"></i> <b>Contact</b></a>
+                  <a href="#" onclick="toggleSidebar()"><i class="fas fa-calendar-alt"></i> <b>Help/ Feedback!</b></a>
+
+    </div>
+    <header>
+        <div class="logo">
+            <img src="logoimg.jpg"/>
+            <b>Adil Zaidi Blogs</b>
+        </div>
+        <button class="icon-btn" id="openSearch" title="Open Search">
+            <i class="fas fa-search"></i>
+        </button>
+
+        <!-- ❌ Close Search Icon -->
+        <button class="icon-btn hide" id="closeSearch" title="Close Search">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- ☰ Hamburger Menu Icon -->
+        <button class="icon-btn" id="menuToggle" title="Toggle Menu" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Overlay Search Area -->
+        <div class="search-overlay" id="searchOverlay">
+            <input type="search" id="searchBar" placeholder="Search tournaments, games, Free Fire..." autocomplete="on"
+                inputmode="text" />
+            <ul id="resultList"></ul>
+        </div>
+    </header>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome To<h1 class="gradient-text">Adil Zaidi Blogs!</h1></h1>
+      <a href="#" class="get-started-btn">Get Started <span>&#10140;</span></a>
+      <p>
+        I'm Adil Kavish Zaidi, a passionate soul who finds expression through words. Whether it's composing heartfelt
+        poetry or crafting thought-provoking blogs, I love connecting with people through stories and emotions.
+      </p>
+    </div>
+ </section> <br>
+   <div class="about-heading"><h1><b>Latest Blogs!</b></h1></div>
+  <div id="homepage-blogs" class="blog-list"></div>
+
+<br><br> <br> <div class="about-heading"><h1><b>Featured Books!</b></h1></div> <br>
+<div class="game-slider">
+      <div class="game-card22">
+        <span class="iconbadge22">Trending Post</span>
+        <img src="nehjulblaga.jpg"  />
+      </div>
+      <div class="game-card22">
+        <span class="iconbadge22">Trending Post</span>
+        <img src="71vEGjTElsL.jpg" alt="Call of Duty" />
+      </div>
+      <div class="game-card22">
+        <span class="iconbadge22">Trending Post</span>
+        <img src="images.jpg" alt="Rainbow Six Siege" />
+      </div>
+    <div class="game-card22">
+      <span class="iconbadge22">Trending Post</span>
+      <img src="9781616208882.jpg" alt="Rainbow Six Siege" />
+    </div>
+  </div>
+  <br> 
+  <div id="popup-notification" role="alert" aria-live="assertive" aria-atomic="true">
+  <p>Welcome to Ichigo Official Blogs! Enjoy the latest posts.</p>
+  <button aria-label="Close notification" id="popup-close">&times;</button>
+</div>
+                <!--   
+  <h1 class="glitch" data-text="AnimeStore">AnimeStore</h1>
+  <br>
+  <div class="product-list-wrapper">
+    <div class="product-card">
+      <div class="discount-badge">30% OFF</div>
+      <img src="Abstract_Illustrative_Stream_Studio_Logo__4_-removebg-preview (1).png" alt="Product 3">
+      <div class="product-title">Anime Book</div>
+      <div class="product-price">120</div>
+      <div class="product-rating">⭐⭐⭐⭐⭐</div>
+    </div>
+
+    
+</div>
+<br> --> <br>
+<br>
+        <footer>
+    <div>
+      <h4>Adil Zaidi Blogs!</h4>
+      <p>Your go-to place for awesome blogs and poetry. Stay tuned!</p>
+    </div>
+    <div>
+      <h4>Subscribe</h4>
+      <form class="subscribe-form" action="https://formsubmit.co/your-email@example.com" method="POST" target="_blank" novalidate>
+        <input type="email" name="email" placeholder="Enter your email" required />
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+    <div>
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </footer><!-- Firebase and JS -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script>
+
+            function redirectToSecure() {
+                window.location.href = "secured-page.html";
+            }
+
+            function toggleSidebar() {
+                document.getElementById('sidebar').classList.toggle('open');
+                document.body.classList.toggle('sidebar-open');
+            }
+
+            function toggleNotification() {
+                const panel = document.getElementById('notificationPanel');
+                panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+            }
+        </script>
+  <!-- Include Firebase scripts (same as your admin panel) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { getFirestore, collection, getDocs, doc, updateDoc, onSnapshot, query, orderBy, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCdeme0EVSoDmtKS2kjJb9lz_om82VxTSo",
+    authDomain: "bloging-1e7df.firebaseapp.com",
+    projectId: "bloging-1e7df",
+    storageBucket: "bloging-1e7df.appspot.com",
+    messagingSenderId: "177297831056",
+    appId: "1:177297831056:web:4cc414cdeb9e4ebe14d415"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const blogsDiv = document.getElementById("homepage-blogs");
+
+  // Load and display blogs
+  async function loadBlogs() {
+    const blogsRef = collection(db, "blogs");
+    const q = query(blogsRef, orderBy("date", "desc"));
+    const snapshot = await getDocs(q);
+
+    blogsDiv.innerHTML = "";
+
+    snapshot.forEach(async (docSnap) => {
+      const blog = docSnap.data();
+      const blogId = docSnap.id;
+
+      // Increase view count (simple approach)
+      const blogDocRef = doc(db, "blogs", blogId);
+      if (!blog.views) blog.views = 0; // fallback if views don't exist
+      const newViews = (blog.views || 0) + 1;
+      updateDoc(blogDocRef, { views: newViews });
+
+      // Create blog card
+      const div = document.createElement("div");
+      div.className = "blog-card";
+      div.style.border = "1px solid #ccc";
+      div.style.padding = "15px";
+      div.style.marginBottom = "20px";
+      div.style.borderRadius = "5px";
+      div.style.background = "#fff";
+
+      div.innerHTML = `
+        <h3>${blog.title}</h3>
+        <p><strong>${blog.category}</strong> | by ${blog.author} | Views: ${newViews}</p>
+        ${blog.imageUrl && blog.imageUrl !== "none" ? `<img src="${blog.imageUrl}" alt="${blog.title}" style="max-width:100%;height:auto; margin:10px 0;">` : ""}
+        <div>${blog.content}</div>
+        <button onclick="toggleComments('${blogId}')">Show Comments</button>
+        <div id="comments-${blogId}" style="display:none; margin-top:10px; border-top:1px solid #eee; padding-top:10px;"></div>
+        <div style="margin-top:10px;">
+          <input type="text" id="commentInput-${blogId}" placeholder="Add comment..." style="width:80%;padding:5px;">
+          <button onclick="addComment('${blogId}')">Post</button>
+        </div>
+      `;
+
+      blogsDiv.appendChild(div);
+    });
+  }
+
+  window.toggleComments = async function(blogId) {
+    const box = document.getElementById("comments-" + blogId);
+    if (box.style.display === "none") {
+      box.style.display = "block";
+      box.innerHTML = "<em>Loading comments...</em>";
+
+      const commentsRef = collection(db, "blogs", blogId, "comments");
+      const commentsSnap = await getDocs(commentsRef);
+
+      if (commentsSnap.empty) {
+        box.innerHTML = "<i>No comments yet.</i>";
+      } else {
+        box.innerHTML = "";
+        commentsSnap.forEach(doc => {
+          const c = doc.data();
+          const commentDiv = document.createElement("div");
+          commentDiv.style.borderTop = "1px solid #ccc";
+          commentDiv.style.padding = "5px 0";
+          commentDiv.innerHTML = `<strong>${c.user || "Anonymous"}</strong> (${new Date(c.date).toLocaleString()}):<br>${c.text}`;
+          box.appendChild(commentDiv);
+        });
+      }
+    } else {
+      box.style.display = "none";
     }
+  }
 
-    loadPosts();
+  window.addComment = async function(blogId) {
+    const input = document.getElementById("commentInput-" + blogId);
+    const text = input.value.trim();
+    if (!text) return alert("Comment cannot be empty.");
+
+    // Add comment to Firestore under blog's comments collection
+    await addDoc(collection(db, "blogs", blogId, "comments"), {
+      user: "Anonymous", // you can replace with logged-in user if you want
+      text,
+      date: new Date().toISOString()
+    });
+
+    input.value = "";
+    toggleComments(blogId);  // Refresh comments view
+    toggleComments(blogId);  // Re-open comments
+  }
+
+  loadBlogs();
+</script>
+ <script>
+            const keywordPages = {
+                "tournaments": "tournaments.html",
+                "games": "games.html",
+                "gaming": "gaming.html",
+                "match": "match.html",
+                "free fire": "freefire.html",
+                "pubg": "pubg.html",
+                "minecraft": "minecraft.html",
+                "valorant": "valorant.html",
+                "call of duty": "cod.html",
+                "mobile legends": "mobilelegends.html"
+            };
+
+            const openBtn = document.getElementById("openSearch");
+            const closeBtn = document.getElementById("closeSearch");
+            const overlay = document.getElementById("searchOverlay");
+            const searchBar = document.getElementById("searchBar");
+            const resultList = document.getElementById("resultList");
+
+            // Open search
+            openBtn.addEventListener("click", () => {
+                overlay.classList.add("active");
+                openBtn.classList.add("hide");
+                closeBtn.classList.remove("hide");
+                setTimeout(() => searchBar.focus(), 300);
+            });
+
+            // Close search
+            closeBtn.addEventListener("click", () => {
+                overlay.classList.remove("active");
+                openBtn.classList.remove("hide");
+                closeBtn.classList.add("hide");
+                searchBar.value = "";
+                resultList.innerHTML = "";
+            });
+
+            // Search logic
+            searchBar.addEventListener("keyup", (e) => {
+                const input = searchBar.value.toLowerCase().trim();
+                resultList.innerHTML = "";
+
+                if (e.key === "Enter") {
+                    for (let keyword in keywordPages) {
+                        if (input.includes(keyword)) {
+                            window.location.href = keywordPages[keyword];
+                            return;
+                        }
+                    }
+                    alert("No matching page found.");
+                } else {
+                    const filtered = Object.keys(keywordPages).filter(keyword =>
+                        keyword.includes(input)
+                    );
+
+                    filtered.forEach(match => {
+                        const li = document.createElement("li");
+                        li.textContent = match;
+                        li.onclick = () => {
+                            window.location.href = keywordPages[match];
+                        };
+                        resultList.appendChild(li);
+                    });
+
+                    if (filtered.length === 0 && input) {
+                        resultList.innerHTML = "<li>No results found</li>";
+                    }
+                }
+            });
+
+    
+        </script>
+<script>
+
+            function redirectToSecure() {
+                window.location.href = "secured-page.html";
+            }
+
+            function toggleSidebar() {
+                document.getElementById('sidebar').classList.toggle('open');
+                document.body.classList.toggle('sidebar-open');
+            }
+
+            function toggleNotification() {
+                const panel = document.getElementById('notificationPanel');
+                panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+            }
+        </script>
+  <script>
+
+  // Show popup notification function
+  function showPopup(message, duration = 4000) {
+    const popup = document.getElementById('popup-notification');
+    popup.querySelector('p').textContent = message;
+    popup.classList.add('show');
+
+    // Hide after duration
+    setTimeout(() => {
+      popup.classList.remove('show');
+    }, duration);
+  }
+
+  // Close button handler
+  document.getElementById('popup-close').addEventListener('click', () => {
+    document.getElementById('popup-notification').classList.remove('show');
+  });
+
+  // Example: Show popup on page load
+  window.addEventListener('load', () => {
+    showPopup('Welcome to Ichigo Official Blogs! Enjoy the latest posts.');
+  });
+
+
   </script>
+  
+
 </body>
+
 </html>

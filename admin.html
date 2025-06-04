@@ -2,538 +2,256 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin Panel - Manage Blog Posts</title>
-
-  <!-- Quill editor CSS -->
+  <title>Admin Panel - Blogging</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
-
+  <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      background: #fafafa;
-      color: #222;
+      font-family: Arial, sans-serif;
+      background: #f1f1f1;
+      padding: 20px;
     }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 2rem;
-      color: #ff3300;
-    }
-
-    form {
+    .container {
+      max-width: 800px;
+      margin: auto;
       background: white;
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      margin-bottom: 3rem;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 0.3rem;
-      font-weight: 600;
-    }
-
-    input[type="text"], input[type="date"], input[type="url"], select {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-
-    #editor {
-      height: 150px;
-      margin-bottom: 1rem;
-      background: white;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    button[type="submit"], button {
-      background: #ff3300;
-      color: white;
-      font-weight: 700;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background 0.3s ease;
-      margin-right: 0.5rem;
-    }
-
-    button[type="submit"]:hover, button:hover {
-      background: #cc0000;
-    }
-
-    .posts-list {
-      margin-top: 1rem;
-    }
-
-    .post {
-      background: white;
-      padding: 1rem;
-      margin-bottom: 1rem;
+      padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-      position: relative;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
     }
-
-    .post h3 {
-      margin: 0 0 0.3rem 0;
-      color: #ff3300;
-    }
-
-    .post small {
-      color: #666;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    .post-category {
-      font-style: italic;
-      margin-bottom: 0.5rem;
-      color: #0077cc;
-    }
-
-    .post-content {
-      color: #333;
-      margin-bottom: 0.5rem;
-    }
-
-    .post-video {
-      margin-top: 0.75rem;
-      position: relative;
+    input, select, button {
       width: 100%;
-      padding-bottom: 56.25%; /* 16:9 aspect ratio */
-      height: 0;
-      margin-bottom: 0.5rem;
+      padding: 10px;
+      margin: 10px 0;
     }
-
-    .post-video iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-      border-radius: 8px;
-    }
-
-    .btn-delete, .btn-edit {
-      position: absolute;
-      top: 1rem;
-      background: #cc0000;
-      border: none;
-      color: white;
-      padding: 0.4rem 0.7rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 700;
-      transition: background 0.3s ease;
-      font-size: 0.9rem;
-    }
-
-    .btn-edit {
-      right: 4.5rem;
-      background: #0077cc;
-    }
-
-    .btn-delete {
-      right: 1rem;
-    }
-
-    .btn-delete:hover {
-      background: #ff0000;
-    }
-
-    .btn-edit:hover {
-      background: #005999;
-    }
-
-    .loading {
-      text-align: center;
-      font-style: italic;
-      color: #999;
-    }
-
-    .comments-section {
-      background: #f7f7f7;
-      border-radius: 8px;
-      padding: 0.75rem 1rem;
-      margin-top: 1rem;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    .comment {
+    #editor {
+      height: 200px;
       background: white;
-      padding: 0.5rem;
-      margin-bottom: 0.5rem;
-      border-radius: 8px;
-      position: relative;
-      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+      margin-bottom: 10px;
     }
-
-    .comment small {
-      color: #666;
-      display: block;
-      margin-bottom: 0.3rem;
-    }
-
-    .btn-comment-delete {
-      position: absolute;
-      top: 0.3rem;
-      right: 0.3rem;
-      background: #cc0000;
-      border: none;
-      color: white;
-      padding: 0.2rem 0.5rem;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 0.8rem;
-      transition: background 0.3s ease;
-    }
-
-    .btn-comment-delete:hover {
-      background: #ff0000;
-    }
-
-    .comment-form {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-
-    .comment-form input[type="text"] {
-      flex-grow: 1;
-      padding: 0.4rem 0.6rem;
-      border-radius: 8px;
+    .blog-card {
       border: 1px solid #ccc;
-      font-size: 0.9rem;
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 5px;
+      background: #fff;
     }
-
-    .comment-form button {
-      flex-shrink: 0;
-      padding: 0.4rem 0.8rem;
-      font-size: 0.9rem;
+    .blog-card button {
+      margin-right: 10px;
+    }
+    .comment {
+      border-top: 1px solid #eee;
+      margin-top: 10px;
+      padding-top: 5px;
+    }
+    .comment button {
+      float: right;
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px;
+      margin-top: 5px;
     }
   </style>
-
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-  <!-- Quill Editor JS -->
-  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-
 </head>
 <body>
 
-  <h1>Admin Panel: Manage Blog Posts</h1>
+<div class="container">
+  <h2>Post or Edit Blog</h2>
+  <button id="loginBtn">Login with Google</button>
+  <input type="hidden" id="editId">
+  <select id="category">
+    <option value="Poetry">Poetry</option>
+    <option value="Technology">Technology</option>
+    <option value="Tips">Tips</option>
+    <option value="News">News</option>
+  </select>
+  <input type="file" id="image" accept="image/*">
+  <input type="text" id="title" placeholder="Enter blog title">
+  <div id="editor"></div>
+  <button id="postBtn">Post Blog</button>
+</div>
 
-  <form id="post-form">
-    <input type="hidden" id="post-id" value="" />
+<div class="container">
+  <h2>All Blogs & Comments</h2>
+  <div id="blogs"></div>
+</div>
 
-    <label for="title">Post Title</label>
-    <input type="text" id="title" required placeholder="Enter post title" />
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+  import {
+    getFirestore, collection, addDoc, getDocs, onSnapshot,
+    doc, deleteDoc, updateDoc
+  } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  import {
+    getStorage, ref, uploadBytes, getDownloadURL
+  } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
 
-    <label for="author">Author</label>
-    <input type="text" id="author" required placeholder="Enter author name" />
+  const firebaseConfig = {
+    apiKey: "AIzaSyCdeme0EVSoDmtKS2kjJb9lz_om82VxTSo",
+    authDomain: "bloging-1e7df.firebaseapp.com",
+    projectId: "bloging-1e7df",
+    storageBucket: "bloging-1e7df.appspot.com",
+    messagingSenderId: "177297831056",
+    appId: "1:177297831056:web:4cc414cdeb9e4ebe14d415"
+  };
 
-    <label for="date">Date</label>
-    <input type="date" id="date" required />
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
 
-    <label for="category">Category</label>
-    <select id="category" required>
-      <option value="" disabled selected>Select category</option>
-      <option value="Tech">Tech</option>
-      <option value="Lifestyle">Lifestyle</option>
-      <option value="News">News</option>
-      <option value="Gaming">Gaming</option>
-      <option value="Education">Education</option>
-      <!-- Add more categories as you want -->
-    </select>
+  const loginBtn = document.getElementById("loginBtn");
+  const postBtn = document.getElementById("postBtn");
+  const quill = new Quill('#editor', { theme: 'snow' });
 
-    <label for="editor">Content</label>
-    <div id="editor"></div>
+  let currentUser = null;
 
-    <label for="youtube-url">YouTube Video URL (optional)</label>
-    <input type="url" id="youtube-url" placeholder="Paste YouTube video link here" />
+  loginBtn.addEventListener("click", async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      currentUser = result.user;
+      loginBtn.textContent = `Logged in as ${currentUser.displayName}`;
+      loginBtn.disabled = true;
+    } catch (error) {
+      alert("Login failed.");
+    }
+  });
 
-    <button type="submit" id="submit-btn">Add Post</button>
-    <button type="button" id="cancel-edit-btn" style="display:none; background:#666;">Cancel Edit</button>
-  </form>
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      currentUser = user;
+      loginBtn.textContent = `Logged in as ${user.displayName}`;
+      loginBtn.disabled = true;
+    }
+  });
 
-  <h2>Existing Posts</h2>
-  <div id="posts-container" class="posts-list">
-    <p class="loading">Loading posts...</p>
-  </div>
+  postBtn.addEventListener("click", async () => {
+    const category = document.getElementById("category").value;
+    const imageFile = document.getElementById("image").files[0];
+    const title = document.getElementById("title").value.trim();
+    const content = quill.root.innerHTML;
+    const editId = document.getElementById("editId").value;
 
-  <script>
-    // Initialize Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyCdeme0EVSoDmtKS2kjJb9lz_om82VxTSo",
-      authDomain: "bloging-1e7df.firebaseapp.com",
-      projectId: "bloging-1e7df",
-      storageBucket: "bloging-1e7df.appspot.com",
-      messagingSenderId: "177297831056",
-      appId: "1:177297831056:web:4cc414cdeb9e4ebe14d415"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    // Initialize Quill editor
-    const quill = new Quill('#editor', {
-      theme: 'snow',
-      placeholder: 'Write your blog content here...',
-      modules: {
-        toolbar: [
-          ['bold', 'italic', 'underline'],
-          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-          ['link', 'image']
-        ]
-      }
-    });
-
-    const postForm = document.getElementById('post-form');
-    const postsContainer = document.getElementById('posts-container');
-    const submitBtn = document.getElementById('submit-btn');
-    const cancelEditBtn = document.getElementById('cancel-edit-btn');
-    const postIdInput = document.getElementById('post-id');
-
-    // Extract YouTube video ID from URL helper
-    function getYouTubeVideoID(url) {
-      if (!url) return null;
-      const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/;
-      const match = url.match(regex);
-      return match ? match[1] : null;
+    if (!title || !content || !currentUser) {
+      alert("Fill all fields and login first.");
+      return;
     }
 
-    // Reset form after submission or cancel edit
-    function resetForm() {
-      postForm.reset();
-      quill.setContents([]);
-      postIdInput.value = "";
-      submitBtn.textContent = 'Add Post';
-      cancelEditBtn.style.display = 'none';
-      document.getElementById('category').selectedIndex = 0;
+    let imageUrl = null;
+    if (imageFile) {
+      const imageRef = ref(storage, `blogImages/${Date.now()}-${imageFile.name}`);
+      await uploadBytes(imageRef, imageFile);
+      imageUrl = await getDownloadURL(imageRef);
     }
 
-    // Load posts and display them
-    async function loadPosts() {
-      postsContainer.innerHTML = '<p class="loading">Loading posts...</p>';
-      try {
-        const snapshot = await db.collection('posts').orderBy('createdAt', 'desc').get();
-        if (snapshot.empty) {
-          postsContainer.innerHTML = '<p>No posts found.</p>';
-          return;
-        }
-
-        postsContainer.innerHTML = '';
-        snapshot.forEach(doc => {
-          const post = doc.data();
-          const videoID = getYouTubeVideoID(post.youtubeUrl);
-          const postDiv = document.createElement('div');
-          postDiv.classList.add('post');
-
-          postDiv.innerHTML = `
-            <h3>${post.title}</h3>
-            <div class="post-category">Category: ${post.category}</div>
-            ${videoID ? `
-              <div class="post-video">
-                <iframe src="https://www.youtube.com/embed/${videoID}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-              </div>
-            ` : ''}
-            <small>By ${post.author} on ${post.date}</small>
-            <div class="post-content">${post.content}</div>
-            <button class="btn-edit" onclick="editPost('${doc.id}')">Edit</button>
-            <button class="btn-delete" onclick="deletePost('${doc.id}')">Delete</button>
-            <div class="comments-section" id="comments-${doc.id}">
-              <h4>Comments</h4>
-              <div id="comments-list-${doc.id}">Loading comments...</div>
-              <form class="comment-form" onsubmit="addComment(event, '${doc.id}')">
-                <input type="text" id="comment-input-${doc.id}" placeholder="Add comment..." required />
-                <button type="submit">Add</button>
-              </form>
-            </div>
-          `;
-
-          postsContainer.appendChild(postDiv);
-
-          loadComments(doc.id);
+    try {
+      if (editId) {
+        const blogRef = doc(db, "blogs", editId);
+        const updateData = {
+          category, title, content,
+          author: currentUser.displayName,
+          date: new Date().toISOString()
+        };
+        if (imageUrl) updateData.imageUrl = imageUrl;
+        await updateDoc(blogRef, updateData);
+        alert("Blog updated!");
+      } else {
+        await addDoc(collection(db, "blogs"), {
+          category, title, content,
+          imageUrl: imageUrl || "none",
+          author: currentUser.displayName,
+          date: new Date().toISOString()
         });
-      } catch (error) {
-        postsContainer.innerHTML = `<p style="color:red;">Error loading posts: ${error.message}</p>`;
+        alert("Blog posted!");
       }
+
+      document.getElementById("title").value = "";
+      document.getElementById("image").value = "";
+      quill.root.innerHTML = "";
+      document.getElementById("editId").value = "";
+      postBtn.textContent = "Post Blog";
+    } catch (err) {
+      alert("Error posting blog.");
     }
+  });
 
-    // Load comments for a specific post
-    async function loadComments(postId) {
-      const commentsList = document.getElementById(`comments-list-${postId}`);
-      commentsList.innerHTML = 'Loading comments...';
+  function loadBlogs() {
+    const blogsDiv = document.getElementById("blogs");
+    const blogsRef = collection(db, "blogs");
 
-      try {
-        const commentsSnapshot = await db.collection('posts').doc(postId).collection('comments').orderBy('createdAt', 'desc').get();
-        if (commentsSnapshot.empty) {
-          commentsList.innerHTML = '<p>No comments yet.</p>';
-          return;
-        }
+    onSnapshot(blogsRef, snapshot => {
+      blogsDiv.innerHTML = "";
+      snapshot.forEach(docSnap => {
+        const blog = docSnap.data();
+        const blogId = docSnap.id;
 
-        commentsList.innerHTML = '';
-        commentsSnapshot.forEach(commentDoc => {
-          const comment = commentDoc.data();
-          const commentDiv = document.createElement('div');
-          commentDiv.classList.add('comment');
-          commentDiv.innerHTML = `
-            <small><strong>${comment.author}</strong> on ${comment.createdAt.toDate().toLocaleString()}</small>
-            <div>${comment.text}</div>
-            <button class="btn-comment-delete" onclick="deleteComment('${postId}', '${commentDoc.id}')">X</button>
-          `;
-          commentsList.appendChild(commentDiv);
-        });
-      } catch (error) {
-        commentsList.innerHTML = `<p style="color:red;">Error loading comments: ${error.message}</p>`;
-      }
-    }
+        const div = document.createElement("div");
+        div.className = "blog-card";
 
-    // Add a new comment to a post
-    async function addComment(event, postId) {
-      event.preventDefault();
-      const input = document.getElementById(`comment-input-${postId}`);
-      const text = input.value.trim();
-      if (!text) return;
+        div.innerHTML = `
+          <h3>${blog.title}</h3>
+          <p><strong>${blog.category}</strong> | by ${blog.author}</p>
+          <div style="margin-top:10px;">
+            <button onclick="editBlog('${blogId}', \`${blog.title}\`, \`${blog.category}\`, \`${blog.content.replace(/`/g, "\\`")}\`)">Edit</button>
+            <button onclick="deleteBlog('${blogId}')">Delete</button>
+            <button onclick="toggleComments('${blogId}')">Comments</button>
+          </div>
+          <div id="comments-${blogId}" style="display:none; margin-top:10px;"></div>
+        `;
 
-      // For demo, we use 'Admin' as author. You can add auth later.
-      const newComment = {
-        author: 'Admin',
-        text,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      };
-
-      try {
-        await db.collection('posts').doc(postId).collection('comments').add(newComment);
-        input.value = '';
-        loadComments(postId);
-      } catch (error) {
-        alert('Error adding comment: ' + error.message);
-      }
-    }
-
-    // Delete a comment
-    async function deleteComment(postId, commentId) {
-      if (!confirm('Delete this comment?')) return;
-      try {
-        await db.collection('posts').doc(postId).collection('comments').doc(commentId).delete();
-        loadComments(postId);
-      } catch (error) {
-        alert('Error deleting comment: ' + error.message);
-      }
-    }
-
-    // Add or update post in Firestore
-    postForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      submitBtn.disabled = true;
-
-      const id = postIdInput.value;
-      const title = document.getElementById('title').value.trim();
-      const author = document.getElementById('author').value.trim();
-      const date = document.getElementById('date').value;
-      const category = document.getElementById('category').value;
-      const content = quill.root.innerHTML.trim();
-      const youtubeUrl = document.getElementById('youtube-url').value.trim();
-
-      if (!title || !author || !date || !category || !content) {
-        alert('Please fill in all required fields.');
-        submitBtn.disabled = false;
-        return;
-      }
-
-      try {
-        if (id) {
-          // Update existing post
-          await db.collection('posts').doc(id).update({
-            title, author, date, category, content, youtubeUrl
-          });
-          alert('Post updated successfully!');
-        } else {
-          // Add new post with server timestamp for ordering
-          await db.collection('posts').add({
-            title,
-            author,
-            date,
-            category,
-            content,
-            youtubeUrl,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          });
-          alert('Post added successfully!');
-        }
-        resetForm();
-        loadPosts();
-      } catch (error) {
-        alert('Error saving post: ' + error.message);
-      }
-      submitBtn.disabled = false;
+        blogsDiv.appendChild(div);
+      });
     });
+  }
 
-    // Delete a post by ID
-    async function deletePost(id) {
-      if (!confirm('Are you sure you want to delete this post?')) return;
-      try {
-        await db.collection('posts').doc(id).delete();
-        loadPosts();
-      } catch (error) {
-        alert('Error deleting post: ' + error.message);
-      }
+  window.editBlog = function (id, title, category, content) {
+    document.getElementById("editId").value = id;
+    document.getElementById("title").value = title;
+    document.getElementById("category").value = category;
+    quill.root.innerHTML = content;
+    postBtn.textContent = "Update Blog";
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  window.deleteBlog = async function (id) {
+    if (confirm("Delete this blog?")) {
+      await deleteDoc(doc(db, "blogs", id));
     }
+  }
 
-    // Edit post - populate form with existing post data
-    async function editPost(id) {
-      try {
-        const doc = await db.collection('posts').doc(id).get();
-        if (!doc.exists) {
-          alert('Post not found!');
-          return;
-        }
-        const post = doc.data();
-        postIdInput.value = id;
-        document.getElementById('title').value = post.title || '';
-        document.getElementById('author').value = post.author || '';
-        document.getElementById('date').value = post.date || '';
-        document.getElementById('category').value = post.category || '';
-        quill.root.innerHTML = post.content || '';
-        document.getElementById('youtube-url').value = post.youtubeUrl || '';
-
-        submitBtn.textContent = 'Update Post';
-        cancelEditBtn.style.display = 'inline-block';
-        window.scrollTo({top:0, behavior: 'smooth'});
-      } catch (error) {
-        alert('Error fetching post: ' + error.message);
-      }
+  window.toggleComments = async function(blogId) {
+    const box = document.getElementById("comments-" + blogId);
+    if (box.style.display === "none") {
+      box.style.display = "block";
+      box.innerHTML = "<em>Loading...</em>";
+      const commentsSnap = await getDocs(collection(db, "blogs", blogId, "comments"));
+      box.innerHTML = "";
+      if (commentsSnap.empty) box.innerHTML = "<i>No comments yet.</i>";
+      commentsSnap.forEach(doc => {
+        const data = doc.data();
+        const div = document.createElement("div");
+        div.className = "comment";
+        div.innerHTML = `<strong>${data.user}</strong> (${new Date(data.date).toLocaleString()}):<br>${data.text}
+        <button onclick="deleteComment('${blogId}', '${doc.id}')">Delete</button>`;
+        box.appendChild(div);
+      });
+    } else {
+      box.style.display = "none";
     }
+  };
 
-    // Cancel edit
-    cancelEditBtn.addEventListener('click', () => {
-      resetForm();
-    });
+  window.deleteComment = async function(blogId, commentId) {
+    if (confirm("Delete comment?")) {
+      await deleteDoc(doc(db, "blogs", blogId, "comments", commentId));
+    }
+  };
 
-    // Expose these functions globally for inline onclick handlers
-    window.editPost = editPost;
-    window.deletePost = deletePost;
-    window.addComment = addComment;
-    window.deleteComment = deleteComment;
-
-    // Initial load
-    loadPosts();
-  </script>
+  loadBlogs();
+</script>
 </body>
 </html>
